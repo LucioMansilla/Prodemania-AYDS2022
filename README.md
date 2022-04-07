@@ -2,3 +2,4 @@
 
 ### Integrantes: 
 - Mateo Vieyra
+- Brenda Dichiara
