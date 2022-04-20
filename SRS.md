@@ -27,3 +27,64 @@ Los jugadores seleccionan los torneos en los cuales quieren participar y hacer p
 Los jugadores podrán acceder a visualizar la tabla de puntos obtenidos por cada torneo, como también podrán ver sus propias predicciones hechas a lo largo del tiempo, y cuál fue el resultado de su predicción.
 
 Existirá un usuario administrador, que será el encargado de cargar los torneos, los equipos, los partidos de cada fecha y los resultados de los mismos.
+
+## Requerimientos
+
+### Requerimientos Funcionales
+
+Usuario Jugador(Actor):
+- Registrarse como jugador(nombre de usuario, contraseña, email)
+
+- Iniciar sesión(nombre de usuario, contraseña)
+
+- Cerrar sesión
+
+- Modificar el perfil(nombre de usuario, contraseña , email)
+
+- Recuperar contraseña(email)
+
+- Visualizar la tabla de puntos de cada torneo en los que es participe.
+
+- Visualizar las predicciones hechas a un torneo en particular
+
+- Cargar predicciones
+
+- Modificar predicciones 
+
+- Eliminar predicciones
+
+
+Usuario Administrador:
+- Registrar a otros usuarios como administrador(nombre de usuario, contraseña, email)
+
+- Iniciar sesión(nombre de usuario, contraseña)
+
+- Cerrar sesión
+
+- Recuperar contraseña(email)
+
+- Cargar torneo(nombre)
+
+- Cargar equipo(nombre, torneo)
+
+- Cargar partido(equipo local, equipo visitante, fecha, hora)
+
+- Cargar resultado(resultado, goles local, goles visitante)
+
+- Visualizar la tabla de puntos de cada torneo
+
+- Visualizar las predicciones hechas a lo largo del tiempo
+
+- Visualizar las predicciones hechas a un torneo en particular
+
+- Visualizar los resultados cargados
+
+- Al cargar un resultado se deben recalcular los puntos para los jugadores que hicieron predicciones.
+### Requerimientos No Funcionales
+
+- No se puede registrar un usuario con el mismo nombre de usuario o email que otro usuario ya registrado
+
+- Un usuario no puede cambiar su nombre de usuario a uno que ya exista
+
+- La contraseña no se guarda en texto plano
+
