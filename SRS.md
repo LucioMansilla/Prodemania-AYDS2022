@@ -54,7 +54,7 @@ Usuario Jugador(Actor):
 - Eliminar predicciones
 
 
-Usuario Administrador:
+Usuario Administrador(Actor):
 - Registrar a otros usuarios como administrador(nombre de usuario, contraseña, email)
 
 - Iniciar sesión(nombre de usuario, contraseña)
