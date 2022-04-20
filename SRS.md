@@ -91,7 +91,8 @@ Usuario Administrador:
 
 ## Diagrama UML
         Aclaración
-        Punto, es una clase asociación entre Jugador y Torneo, su atributo cantPunto es el conteo de puntos totales que un jugador acumula en un determinado torneo.
+        Punto, es una clase asociación entre Jugador y Torneo, 
+        su atributo cantPunto es el conteo de puntos totales que un jugador acumula en un determinado torneo.
 
 [![](https://mermaid.ink/img/pako:eNqlVE1PrDAU_Suky4lOdEsmJkRHg8EZoqOrbmpbZxqhxX5oXpT_bqGFAmJ8Rtj0nnt67unl0neABaEgBrhASl0wtJeohDyyz70ySDIRrT6Oj6OElIwzpSUiQs7kr82-z4zTccRF-SjpFKUlYsUUrKyJNyFJr-MIXj2C4HS5PIUgshUhOFkuF3adS0oYxkxwRw6x4y86vt-bI6kZEZ7sgnnmJcUH5C349RxtJySn_6O3fjGsao75yhTTiGsa_WZXITAq5joy3LGYGvqhG0Our_SjJuTubdbt3AyqvDu4eSRVptDWpvW-u-2CkN-LgqqsOdQEe-jaE_DKcC2Ui-vORT9r3oTr4pyDvxsgDIXgIOQg0rZptsBoruqQ7r06l8FIMLpaUW5KKpG2HTw76_Fse55kffSQ3qW7ZLNb98j6Jk-asAXq7pN0hb7047syV7f3-TZLr5IgnKU36SY5T7ebibrTbv-GIEyowpJV_T84JruxCuzBfTAmuhn7jjhuY94MRKBi-7VaKMj6HDgC9sj2siH2lms3QKAPtKQQxHZJkHyGAPLa8kxFkKZrwrSQIH5ChaJHABkt7v5xDGItDe1I_qb0rPoT2TeN-Q)](https://mermaid-js.github.io/mermaid-live-editor/edit#pako:eNqlVE1PrDAU_Suky4lOdEsmJkRHg8EZoqOrbmpbZxqhxX5oXpT_bqGFAmJ8Rtj0nnt67unl0neABaEgBrhASl0wtJeohDyyz70ySDIRrT6Oj6OElIwzpSUiQs7kr82-z4zTccRF-SjpFKUlYsUUrKyJNyFJr-MIXj2C4HS5PIUgshUhOFkuF3adS0oYxkxwRw6x4y86vt-bI6kZEZ7sgnnmJcUH5C349RxtJySn_6O3fjGsao75yhTTiGsa_WZXITAq5joy3LGYGvqhG0Our_SjJuTubdbt3AyqvDu4eSRVptDWpvW-u-2CkN-LgqqsOdQEe-jaE_DKcC2Ui-vORT9r3oTr4pyDvxsgDIXgIOQg0rZptsBoruqQ7r06l8FIMLpaUW5KKpG2HTw76_Fse55kffSQ3qW7ZLNb98j6Jk-asAXq7pN0hb7047syV7f3-TZLr5IgnKU36SY5T7ebibrTbv-GIEyowpJV_T84JruxCuzBfTAmuhn7jjhuY94MRKBi-7VaKMj6HDgC9sj2siH2lms3QKAPtKQQxHZJkHyGAPLa8kxFkKZrwrSQIH5ChaJHABkt7v5xDGItDe1I_qb0rPoT2TeN-Q)
 
