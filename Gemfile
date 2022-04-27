@@ -6,3 +6,5 @@ github 'sinatra/sinatra' do
   gem 'sinatra'
   gem 'sinatra-contrib'
 end
+
+gem 'multi_json'

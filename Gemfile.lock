@@ -30,6 +30,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  multi_json
   sinatra!
   sinatra-contrib!
 
