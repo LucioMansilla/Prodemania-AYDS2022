@@ -12,6 +12,7 @@ class App < Sinatra::Application
 
   configure do 
     set :views, 'app/views'
+    set :public_folder, 'public'
   end
 
   def initialize(app = nil)
