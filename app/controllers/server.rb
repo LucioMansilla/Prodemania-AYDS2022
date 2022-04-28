@@ -10,6 +10,11 @@ class App < Sinatra::Application
     end
   end
 
+  configure do 
+    set :views, 'app/views'
+    set :public_folder, 'public'
+  end
+
   def initialize(app = nil)
     super()
   end
