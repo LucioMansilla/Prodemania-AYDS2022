@@ -19,20 +19,44 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
+    activemodel (7.0.2.4)
+      activesupport (= 7.0.2.4)
+    activerecord (7.0.2.4)
+      activemodel (= 7.0.2.4)
+      activesupport (= 7.0.2.4)
+    activesupport (7.0.2.4)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      i18n (>= 1.6, < 2)
+      minitest (>= 5.1)
+      tzinfo (~> 2.0)
+    concurrent-ruby (1.1.10)
+    i18n (1.10.0)
+      concurrent-ruby (~> 1.0)
+    minitest (5.15.0)
     multi_json (1.15.0)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
     rack (2.2.3)
+    rake (13.0.6)
     ruby2_keywords (0.0.5)
+    sinatra-activerecord (2.0.25)
+      activerecord (>= 4.1)
+      sinatra (>= 1.0)
+    sqlite3 (1.4.2)
     tilt (2.0.10)
+    tzinfo (2.0.4)
+      concurrent-ruby (~> 1.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   multi_json
+  rake
   sinatra!
+  sinatra-activerecord
   sinatra-contrib!
+  sqlite3
 
 RUBY VERSION
    ruby 2.7.5p203

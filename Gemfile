@@ -8,3 +8,7 @@ github 'sinatra/sinatra' do
 end
 
 gem 'multi_json'
+# Gemfile (add the following gems)
+gem 'sinatra-activerecord'
+gem 'sqlite3'
+gem 'rake'
