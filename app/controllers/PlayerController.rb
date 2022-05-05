@@ -35,8 +35,8 @@ class PlayerController < Sinatra::Base
 
    delete '/players/:id' do 
         Player.destroy(params['id'])
-        #return 200
-        status 204
+    
+        {:status => 204, :mge => "Delete player #{params[:id]}"}.to_json
    end
 
 
