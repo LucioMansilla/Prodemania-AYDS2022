@@ -1,3 +1,3 @@
-class Date < ActiveRecord:Base
+class Date < ActiveRecord::Base
   
 end
