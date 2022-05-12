@@ -12,3 +12,7 @@ gem 'multi_json'
 gem 'sinatra-activerecord'
 gem 'sqlite3'
 gem 'rake'
+
+group :test do
+  gem 'rspec'
+end
