@@ -4,6 +4,7 @@ require 'sinatra/reloader' if Sinatra::Base.environment == :development
 require 'logger'
 require "sinatra/activerecord"
 
+require_relative '../models/init'
 
 class App < Sinatra::Application
 
@@ -50,5 +51,10 @@ class App < Sinatra::Application
   get '/users' do
     erb:user
   end 
+
+  get '/' do
+    logger.info(Player.all)
+    
+  end
 
 end
