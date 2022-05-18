@@ -5,6 +5,7 @@ class Forecast < ActiveRecord::Base
 
     attr_accessor :old_points
   
+    before_create :check_player_tournament
     def calculate_points
       
       self.old_points = self.points ? self.points : 0
@@ -32,5 +33,11 @@ class Forecast < ActiveRecord::Base
   
     def guess_goals 
       self.goals_home == self.match.goals_home && self.goals_away == self.match.goals_away
+    end
+
+    def check_player_tournament
+      if !Point.exists?(tournament: self.tournament, player: self.player)
+        Point.create(player: self.player, tournament: self.tournament, total_points: 0)
+      end
     end
 end
