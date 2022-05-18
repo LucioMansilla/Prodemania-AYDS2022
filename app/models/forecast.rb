@@ -32,7 +32,7 @@ class Forecast < ActiveRecord::Base
     end
   
     def guess_goals 
-      self.goals_home == self.match.goals_home && self.goals_away == self.match.goals_away
+      self.home_goals == self.match.home_goals && self.away_goals == self.match.away_goals
     end
 
     def check_player_tournament
@@ -40,4 +40,9 @@ class Forecast < ActiveRecord::Base
         Point.create(player: self.player, tournament: self.tournament, total_points: 0)
       end
     end
+
+    def check_match_player
+        Forecast.exists?(player_id: self.player_id, match_id: self.match_id)
+    end
+    
 end

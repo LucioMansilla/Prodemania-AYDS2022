@@ -7,13 +7,13 @@ class Match < ActiveRecord::Base
   before_update :calculate_points,  if: :result_or_goals_changed?
 
   def has_result?
-    self.result != nil and self.goals_home != nil and self.goals_away != nil
+    self.result != nil and self.home_goals != nil and self.away_goals != nil
   end
 
-  def set_result(result, goals_home, goals_away)
+  def set_result(result, home_goals, away_goals)
     self.result = result 
-    self.goals_home = goals_home
-    self.goals_away = goals_away
+    self.home_goals = home_goals
+    self.away_goals = away_goals
   end
 
   def calculate_points 
