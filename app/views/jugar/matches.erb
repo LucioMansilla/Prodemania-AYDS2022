@@ -1,0 +1,27 @@
+<h1>Lista de matches: <%=@matches.first.match_day.description %> </h1>
+
+<ul>
+  <% @matches.each do |t|%>
+    <form action="/forecasts" method="post">
+      <li>
+        <%=t.home.name%> vs <%=t.away.name%>
+        Resultado: <select name="result">
+          <option value="HOME">HOME</option>
+          <option value="AWAY">AWAY</option>
+          <option value="DRAW">DRAW</option>
+        </select>
+        Goles local: <input type="number" name="home_goals" placeholder="Goles local">
+        Goles visitante: <input type="number" name="away_goals" placeholder="Goles visitante">
+        <input type="submit" value="Realizar predicción">
+       <!-- add hidden input for send match_id -->
+        <input type="hidden" name="match_id" value=<%=t.id%>>
+        <!-- add the same input for the tournament in t.tournament_id-->
+        <input type="hidden" name="tournament_id" value=<%=t.match_day.tournament_id%>> 
+      </li>
+      <br>
+    </form>
+
+  <% end %>
+</ul>
+
+<a href="/inicio">Volver a Inicio</a>

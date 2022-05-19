@@ -1,0 +1,9 @@
+<h1>Fechas para el torneo: <%=@match_days.first.tournament.name %> </h1>
+
+<ul>
+  <% @match_days.each do |t|%>
+    <a href="/matches?match_day_id=<%= t.id%>"><li><%= t.description%></li></a>
+  <% end %>
+</ul>
+
+<a href="/inicio">Volver a Inicio</a>
