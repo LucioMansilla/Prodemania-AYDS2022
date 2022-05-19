@@ -33,7 +33,24 @@ class App < Sinatra::Application
     super()
   end
 
-  ##---Player Controller ---##
+  ## -- Session -- ##
+  before do
+    if session[:player_id]
+      @current_player = Player.find_by(id: session[:player_id])
+    else
+      public_pages = ["/login", "/signup"]
+      if !public_pages.include?(request.path_info)
+        redirect '/login'
+      end
+    end
+  end
+  ## -- Session -- ##
+
+
+  
+
+
+  ##--- Player Controller ---##
   get '/signup' do
     erb :"players/signup"
   end
@@ -87,35 +104,63 @@ class App < Sinatra::Application
     erb :"points/points"
   end
 
-  before do
-    if session[:player_id]
-      @current_player = Player.find_by(id: session[:player_id])
+
+  ## -- Tournament Controller -- ##
+  get '/match_days' do 
+    @match_days = MatchDay.where(:tournament_id == params[:tournament_id])
+    erb :"jugar/match_days"
+  end
+  
+  post '/tournaments' do
+  
+    name_tournament = params['name']
+  
+    if(!Tournament.exists?(name:name_tournament))
+        tournament = Tournament.new
+        tournament.name = name_tournament
+        tournament.save
+  
+        status 201
+        {:status => 201, :mge => "The tournament was created"}.to_json
+  
     else
-      public_pages = ["/login", "/signup"]
-      if !public_pages.include?(request.path_info)
-        redirect '/login'
-      end
+        status 400
+        {:status => 400, :mge => "The tournament exists"}.to_json
     end
+  
+  end
+  
+  delete '/tournaments/:id' do 
+  
+    Tournament.destroy(params['id'])
+    {:status => 204, :mge => "Delete tournament #{params[:id]}"}.to_json
+  
   end
 
+ ## -- Tournament Controller -- ##
+
+
+
   ## ----forecasts controller----- ##
-  post '/forecast' do
+  post '/forecasts' do
     forecast = Forecast.new
     forecast.match_id = params['match_id']
-    forecast.player_id = params['player_id']
+    forecast.player_id = session['player_id']
     forecast.result = params['result']
     forecast.home_goals = params['home_goals']
     forecast.away_goals = params['away_goals']
     forecast.tournament_id = params['tournament_id']
+    logger.info(params)
     if(!forecast.check_match_player && forecast.resultConsist) then
         forecast.save
+        redirect '/matches?match_day_id=' + forecast.match.match_day_id.to_s
     else
         status 400
         {:status => 400, :mge => "There is already a prediction for that match"}.to_json
     end
 end
 
-put '/forecast/:id' do
+put '/forecasts/:id' do
     forecast = Forecast.find_by(id: params['id'])
     if(forecast) then
         forecast.result = params['result']
@@ -125,6 +170,7 @@ put '/forecast/:id' do
         if(!forecast.check_match_player && forecast.resultConsist) then
             forecast.points = 0
             forecast.save
+             
         else
             status 400
             {:status => 400, :mge => "There is already a prediction for that match"}.to_json
@@ -136,36 +182,11 @@ put '/forecast/:id' do
 end
 
 
-get '/matchDay' do     
-  MatchDay.where(:tournament_id == params[:tournament_id]).to_json
-end
-
-post '/tournaments' do
-
-  name_tournament = params['name']
-
-  if(!Tournament.exists?(name:name_tournament))
-      tournament = Tournament.new
-      tournament.name = name_tournament
-      tournament.save
-
-      status 201
-      {:status => 201, :mge => "The tournament was created"}.to_json
-
-  else
-      status 400
-      {:status => 400, :mge => "The tournament exists"}.to_json
-  end
-      
-end
-
-delete '/tournaments/:id' do 
-
-  Tournament.destroy(params['id'])
-  {:status => 204, :mge => "Delete tournament #{params[:id]}"}.to_json
-
-end
-
   #-------------------------------------------------------------------------#
 
+  ## -- Match Controller -- ##
+  get '/matches' do
+    @matches = Match.where(match_day_id: params[:match_day_id])
+    erb :"jugar/matches"
+  end
 end
