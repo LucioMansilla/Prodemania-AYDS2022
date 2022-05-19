@@ -25,36 +25,76 @@ class App < Sinatra::Application
   configure do 
     set :views, 'app/views'
     set :public_folder, 'public'
+    set :sessions, true
+    set :session_secret, ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }
   end
 
   def initialize(app = nil)
     super()
   end
 
-  user = [
-    {name: 'Juan', email: 'juan@gmail.com',password:'12345'},
-    {name: 'Pedro', email: 'pedro@gmail.com',password:'12345'},
-    {name: 'Ana', email: 'ana@gmail.com',password:'12345'}
-  ]
-
-
-  get '/users2/:name' do
-    user.find { |u| u[:name] == params[:name] }.to_s
+  get '/signup' do
+    erb :"players/signup"
   end
 
-  #post
-  post '/users' do
-    user.push(params)
-    user.to_json
-  end
-
-  get '/users' do
-    erb:user
-  end 
-
-  get '/' do
-    logger.info(Player.all)
+  post '/signup' do
+    player = Player.new(params)
     
+    if !player.save  
+      redirect '/signup'
+    else
+      redirect '/login'
+    end
+  end
+
+  get '/login' do
+    erb :"players/login"
+  end
+
+  post '/login' do
+    player = Player.find_by_name(params[:name])
+
+    if player && player.authenticate(params[:password])
+      session[:player_id] = player.id 
+      redirect '/inicio'
+    else
+      redirect '/login'
+    end
+  end
+
+  get '/logout' do
+    session.clear
+    redirect '/login'
+  end
+
+  get '/inicio' do 
+    erb :inicio
+  end
+
+  get '/jugar' do 
+    @tournaments = Tournament.all 
+    erb :"jugar/tournaments_jugar"
+  end
+
+  get '/points' do
+    @tournaments = Tournament.all 
+    erb :"points/tournament_points"
+  end
+
+  get '/points/:tournament_id' do
+    @points = Point.where(tournament_id: params[:tournament_id]) 
+    erb :"points/points"
+  end
+
+  before do
+    if session[:player_id]
+      @current_player = Player.find_by(id: session[:player_id])
+    else
+      public_pages = ["/login", "/signup"]
+      if !public_pages.include?(request.path_info)
+        redirect '/login'
+      end
+    end
   end
 
 end

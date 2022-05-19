@@ -1,0 +1,9 @@
+<h1>Puntajes <%= @points.first.tournament.name %></h1>
+
+<ul>
+  <% @points.each do |p|%>
+    <li><%= p.player[:name]%>  <%= p[:total_points]%> pts</li>
+  <% end %>
+</ul>
+
+<a href="/inicio">Volver a Inicio</a>
