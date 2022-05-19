@@ -136,6 +136,36 @@ put '/forecast/:id' do
 end
 
 
+get '/matchDay' do     
+  MatchDay.where(:tournament_id == params[:tournament_id]).to_json
+end
+
+post '/tournaments' do
+
+  name_tournament = params['name']
+
+  if(!Tournament.exists?(name:name_tournament))
+      tournament = Tournament.new
+      tournament.name = name_tournament
+      tournament.save
+
+      status 201
+      {:status => 201, :mge => "The tournament was created"}.to_json
+
+  else
+      status 400
+      {:status => 400, :mge => "The tournament exists"}.to_json
+  end
+      
+end
+
+delete '/tournaments/:id' do 
+
+  Tournament.destroy(params['id'])
+  {:status => 204, :mge => "Delete tournament #{params[:id]}"}.to_json
+
+end
+
   #-------------------------------------------------------------------------#
 
 end
