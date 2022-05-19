@@ -5,6 +5,8 @@ class Match < ActiveRecord::Base
   belongs_to :away, class_name: "Team"
 
   before_update :calculate_points,  if: :result_or_goals_changed?
+  validates_presence_of :match_type, :home_id, :away_id, :match_day_id
+  validates :result, acceptance: { accept: ['HOME', 'AWAY','DRAW'] }
 
   def has_result?
     self.result != nil and self.home_goals != nil and self.away_goals != nil
@@ -29,7 +31,7 @@ class Match < ActiveRecord::Base
   end
 
   def result_or_goals_changed? 
-    self.result_changed? || self.goals_home_changed? || self.goals_away_changed? 
+    self.result_changed? || self.home_goals_changed? || self.away_goals_changed? 
   end
   
 

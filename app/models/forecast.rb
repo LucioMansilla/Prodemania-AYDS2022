@@ -4,7 +4,9 @@ class Forecast < ActiveRecord::Base
     belongs_to :tournament
 
     attr_accessor :old_points
-  
+
+    validates_presence_of :player_id, :home_goals, :away_goals, :tournament_id, :result, :match_id
+    validates :result, acceptance: { accept: ['HOME', 'AWAY','DRAW'] }
     before_create :check_player_tournament
     def calculate_points
       
@@ -44,5 +46,16 @@ class Forecast < ActiveRecord::Base
     def check_match_player
         Forecast.exists?(player_id: self.player_id, match_id: self.match_id)
     end
-    
+
+    def resultConsist
+        if self.result == 'HOME' &&  self.home_goals > self.away_goals
+            return true
+        elsif self.result == 'AWAY' &&  self.home_goals < self.away_goals
+            return true
+        elsif self.result == 'DRAW' &&  self.home_goals == self.away_goals
+            return true
+        else
+            return false
+        end
+    end
 end
