@@ -4,4 +4,11 @@ class Tournament < ActiveRecord::Base
     has_many :points
     has_many :match_days
     has_many :forecasts
+
+    validates_uniqueness_of :name
+    validates :name, presence: true
+
+    def self.all_tournament 
+        Tournament.all
+    end
 end
