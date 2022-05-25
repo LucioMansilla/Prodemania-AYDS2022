@@ -2,7 +2,7 @@
 
 <ul>
   <% @tournaments.each do |t|%>
-    <a href="/match_days/<%= t.id%>"><li><%= t.name%></li></a>
+    <a href="/match_days?tournament_id=<%= t.id%>"><li><%= t.name%></li></a>
   <% end %>
 </ul>
 
