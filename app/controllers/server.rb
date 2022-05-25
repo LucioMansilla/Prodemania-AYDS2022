@@ -38,7 +38,7 @@ class App < Sinatra::Application
     if session[:player_id]
       @current_player = Player.find_by(id: session[:player_id])
     else
-      public_pages = ["/login", "/signup"]
+      public_pages = ["/login", "/signup","/teams","/tournaments","/matches","/match_day_create"]
       if !public_pages.include?(request.path_info)
         redirect '/login'
       end
@@ -189,4 +189,58 @@ end
     @matches = Match.where(match_day_id: params[:match_day_id])
     erb :"jugar/matches"
   end
+
+  post '/matches' do
+
+    match = Match.new
+    match.datetime = params['datetime']
+    match.match_type = params['match_type']
+    match.match_day_id = params['match_day_id']
+    match.away_id = params['away_id']
+    match.home_id = params['home_id']
+
+    match.save
+    status 201
+    {:status => 201, :mge => "The match was created"}.to_json
+
+  end
+
+  ## -- Teams Controller -- ##
+
+  post '/teams' do
+  
+    name_team = params['name']
+  
+    if(!Team.exists?(name:name_team))
+        team = Team.new
+        team.name = name_team
+        team.save
+  
+        status 201
+        {:status => 201, :mge => "The team was created"}.to_json
+  
+    else
+        status 400
+        {:status => 400, :mge => "The team exists"}.to_json
+    end
+  
+  end
+
+  ## -- Teams Controller -- ##
+
+  ## -- Math_Day Controller -- ##
+
+  post '/match_day_create' do
+
+    match_day = MatchDay.new
+    match_day.description = params['description']
+    match_day.tournament_id = params['tournament_id']
+    match_day.save
+
+    status 201
+    {:status => 201, :mge => "The match_day was created"}.to_json
+
+  end
+
+## -- Match_Day Controller -- ##
 end
