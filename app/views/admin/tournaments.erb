@@ -1,0 +1,17 @@
+<h1 style="color: black;" >Add tournament</h1>
+
+<!-- add color -->
+
+<% if @msg%>
+<% if @msg[:status] == 200 %>
+  <p><%= @msg[:msg] %></p>
+  <%else%>
+  <p><%= @msg[:msg]%> </p>
+<% end %>
+<%end %>
+
+
+<form action='/tournaments' method='POST'>
+    <label for='Name'>Name: </label><input id='name' name='name' type='text' placeholder='name'></input>
+    <button type='submit'>Add</button>
+</form>
