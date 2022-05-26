@@ -42,12 +42,12 @@ class App < Sinatra::Application
      before do
       if session[:player_id]
         @current_player = Player.find_by(id: session[:player_id])
-   #     admin_pages = ["/teams","/tournaments","/matches","/match_day_create","/add_tournament","/gestion","/add_team"]
-    #    if(admin_pages.include?(request.path_info))
-     #     if(@current_player.is_admin != true)
-      #      redirect '/inicio'
-       #   end
-       # end
+       admin_pages = ["/teams","/tournaments","/matches","/match_day_create","/add_tournament","/gestion","/add_team"]
+       if(admin_pages.include?(request.path_info))
+         if(@current_player.is_admin != true)
+           redirect '/inicio'
+         end
+       end
       else
         public_pages = ["/login", "/signup"]
         if !public_pages.include?(request.path_info)
