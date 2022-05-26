@@ -33,28 +33,29 @@ class App < Sinatra::Application
     super()
   end
 
+  get '/gestion' do
+    erb :"/admin/options"
+  end
 
 
-  ## -- Session -- ##
-  before do
-   if session[:player_id]
-      @current_player = Player.find_by(id: session[:player_id])
-    ##  admin_pages = ["/teams","/tournaments","/matches","/match_day_create"]
-     ## if(!admin_pages.include?(request.path_info))
-       ## if(@current_player.is_admin == false)
-         ## redirect '/inicio'
-        ##end
-      ##end
-    else
-      public_pages = ["/login", "/signup","/add_tournament"]
-      if !public_pages.include?(request.path_info)
-        redirect '/login'
+     ## -- Session -- ##
+     before do
+      if session[:player_id]
+        @current_player = Player.find_by(id: session[:player_id])
+   #     admin_pages = ["/teams","/tournaments","/matches","/match_day_create","/add_tournament","/gestion","/add_team"]
+    #    if(admin_pages.include?(request.path_info))
+     #     if(@current_player.is_admin != true)
+      #      redirect '/inicio'
+       #   end
+       # end
+      else
+        public_pages = ["/login", "/signup"]
+        if !public_pages.include?(request.path_info)
+          redirect '/login'
+        end
       end
     end
-  end
-  ## -- Session -- ##
-
-
+    ## -- Session -- ##
   
 
 
@@ -218,21 +219,18 @@ end
   post '/teams' do
   
     name_team = params['name']
-  
-    if(!Team.exists?(name:name_team))
-        team = Team.new
-        team.name = name_team
-        team.save
-  
-        status 201
-        {:status => 201, :mge => "The team was created"}.to_json
-  
+    team = Team.new
+    team.name = name_team
+    ok = team.save
+    if(ok)
+        @msg = {status: 200, msg: "The team was created"}
+        erb :'admin/teams'
     else
-        status 400
-        {:status => 400, :mge => "The team exists"}.to_json
+        @msg = {status: 400, msg: "The team exists"}
+        erb :'/admin/teams'
     end
-  
-  end
+
+  end   
 
   ## -- Teams Controller -- ##
 
@@ -243,7 +241,7 @@ end
     match_day.description = params['description']
     match_day.tournament_id = Tournament.find_by(name: params['tournament_name']).id
     match = MatchDay.exists?(description: match_day.description, tournament_id: match_day.tournament_id)
-    if(!match.nil?)
+    if(match)
       @msg = {status: 400, msg: "Match day already exists"}
       @tournaments = Tournament.all
       return  erb :'admin/match_days'
@@ -270,8 +268,12 @@ end
 get '/add_match_day' do
   @tournaments = Tournament.all
   erb :"admin/match_days"
-
 end
 
+
+## -- Add Team for Admin -- ##
+get '/add_team' do
+  erb :"admin/teams"
+end
 
 end
