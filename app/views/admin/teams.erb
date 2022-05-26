@@ -14,7 +14,7 @@
     <button type='submit'>Add</button>
     <h2> Select the tournament for the team</h2>
     <label for="tournament">Tournaments: </label>
-       <select id="tournament_id" name="tournament_name">
+     <select multiple="multiple" id="tournament_id" name="tournament_name[]">
            <% @tournaments.each do |tournament| %>
               <%= "<option value='#{tournament.name}'>#{tournament.name}</option>" %>
           <% end %>
