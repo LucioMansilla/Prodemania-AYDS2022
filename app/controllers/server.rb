@@ -37,16 +37,16 @@ class App < Sinatra::Application
 
   ## -- Session -- ##
   before do
-    if session[:player_id]
+   if session[:player_id]
       @current_player = Player.find_by(id: session[:player_id])
-      admin_pages = ["/teams","/tournaments","/matches","/match_day_create","/add_tournament"]
-      if(!admin_pages.include?(request.path_info))
-        if(@current_player.is_admin == false)
-          redirect '/inicio'
-        end
-      end
+    ##  admin_pages = ["/teams","/tournaments","/matches","/match_day_create"]
+     ## if(!admin_pages.include?(request.path_info))
+       ## if(@current_player.is_admin == false)
+         ## redirect '/inicio'
+        ##end
+      ##end
     else
-      public_pages = ["/login", "/signup"]
+      public_pages = ["/login", "/signup","/add_tournament"]
       if !public_pages.include?(request.path_info)
         redirect '/login'
       end
@@ -125,9 +125,11 @@ class App < Sinatra::Application
 
     tournament = Tournament.new
     tournament.name = name_tournament
-        
+    logger.info "Params: #{params.to_s}"
+    @tournaments = Tournament.all
     if(!Tournament.exists?(name:name_tournament) && tournament.save)
         @msg = {status: 200, msg: "Tournament created"}
+        
         erb :'admin/tournaments'
     else
         @msg = {status: 400, msg: "Tournament already exists"}
@@ -236,16 +238,23 @@ end
 
   ## -- Math_Day Controller -- ##
 
-  post '/match_day_create' do
-
+  post '/match_days' do
     match_day = MatchDay.new
     match_day.description = params['description']
-    match_day.tournament_id = params['tournament_id']
-    match_day.save
-
-    status 201
-    {:status => 201, :mge => "The match_day was created"}.to_json
-
+    match_day.tournament_id = Tournament.find_by(name: params['tournament_name']).id
+    match = MatchDay.exists?(description: match_day.description, tournament_id: match_day.tournament_id)
+    if(!match.nil?)
+      @msg = {status: 400, msg: "Match day already exists"}
+      @tournaments = Tournament.all
+      return  erb :'admin/match_days'
+    end
+    if (match_day.save)
+      @msg = {status: 201, msg: "Match day created"}
+    else
+      @msg = {status: 400, msg: "Match day not created, try again"}
+    end
+    @tournaments = Tournament.all
+    erb :"admin/match_days"
   end
 
 ## -- Match_Day Controller -- ##
@@ -254,7 +263,15 @@ end
 
 ## -- Tournament for Admin -- #
 get '/add_tournament' do
+  @tournaments = Tournament.all
   erb :"admin/tournaments"
 end
+
+get '/add_match_day' do
+  @tournaments = Tournament.all
+  erb :"admin/match_days"
+
+end
+
 
 end
