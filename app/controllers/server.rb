@@ -221,7 +221,7 @@ end
     name_team = params['name']
     team = Team.new
     team.name = name_team
-    tournament = Tournament.find_by(name: params['tournament_name'])
+    tournament = Tournament.all.where(name:params['tournament_name'])
     team.tournaments << tournament
     ok = team.save
     @tournaments = Tournament.all
