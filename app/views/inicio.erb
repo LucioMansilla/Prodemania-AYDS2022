@@ -1,6 +1,8 @@
 <h1>Bienvenido <%= @current_player.name %>!!!</h1>
 
-<a href="/jugar">JUGAR</a><br>
-<a href="/points">Ver Tabla de posiciones</a><br><br>
-
+<a href="/jugar">JUGAR</a> <br>
+<a href="/points">Ver Tabla de posiciones</a><br>
+<%if @current_player.is_admin == true%>
+<a href="/gestion">Gestionar</a><br><br>
+<% end%>
 <a href="/logout">Logout</a>
