@@ -1,0 +1,24 @@
+<h1> Add Match_Days </h1>
+
+<% if @msg%>
+<% if @msg[:status] == 201 %>
+  <p style="color: green;"><%= @msg[:msg] %></p>
+  <%else%>
+  <p style="color: red;"><%=@msg[:msg]%> </p>
+<% end %> 
+<%end %>
+<form action="/match_days" method="POST">
+  <label for='Description'>Description: </label><input id='description' name='description' type='text' placeholder='description'></input>
+  <h2> Select the tournament</h2>
+  <label for="tournament">Tournaments: </label>
+     <select id="tournament_id" name="tournament_name">
+         <% @tournaments.each do |tournament| %>
+            <%= "<option value='#{tournament.name}'>#{tournament.name}</option>" %>
+        <% end %>
+     </select>
+  <br>
+  <br>
+  <button type="submit"  >Add</button>
+</form>
+
+
