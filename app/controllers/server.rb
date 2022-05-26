@@ -221,12 +221,17 @@ end
     name_team = params['name']
     team = Team.new
     team.name = name_team
+    tournament = Tournament.find_by(name: params['tournament_name'])
+    team.tournaments << tournament
     ok = team.save
+    @tournaments = Tournament.all
     if(ok)
         @msg = {status: 200, msg: "The team was created"}
+    
         erb :'admin/teams'
     else
         @msg = {status: 400, msg: "The team exists"}
+
         erb :'/admin/teams'
     end
 
@@ -273,6 +278,7 @@ end
 
 ## -- Add Team for Admin -- ##
 get '/add_team' do
+  @tournaments = Tournament.all
   erb :"admin/teams"
 end
 
