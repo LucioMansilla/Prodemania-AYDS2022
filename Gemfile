@@ -18,3 +18,4 @@ group :test do
 end
 
 gem 'bcrypt'
+gem 'sinatra-flash'
