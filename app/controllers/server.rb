@@ -3,11 +3,9 @@ require 'bundler/setup'
 require 'sinatra/reloader' if Sinatra::Base.environment == :development
 require 'logger'
 require "sinatra/activerecord"
-
 require_relative '../models/init'
 
 class App < Sinatra::Application
-
   configure :production, :development do
     enable :logging
     logger = Logger.new(STDOUT)
@@ -28,6 +26,7 @@ class App < Sinatra::Application
     set :sessions, true
     set :session_secret, ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }
   end
+
 
   def initialize(app = nil)
     super()
@@ -56,7 +55,6 @@ class App < Sinatra::Application
       end
     end
     ## -- Session -- ##
-  
 
 
   ##--- Player Controller ---##
@@ -150,46 +148,6 @@ class App < Sinatra::Application
 
 
 
-  ## ----forecasts controller----- ##
-  post '/forecasts' do
-    forecast = Forecast.new
-    forecast.match_id = params['match_id']
-    forecast.player_id = session['player_id']
-    forecast.result = params['result']
-    forecast.home_goals = params['home_goals']
-    forecast.away_goals = params['away_goals']
-    forecast.tournament_id = params['tournament_id']
-    logger.info(params)
-    if(!forecast.check_match_player && forecast.resultConsist) then
-        forecast.save
-        redirect '/matches?match_day_id=' + forecast.match.match_day_id.to_s
-    else
-        status 400
-        {:status => 400, :mge => "There is already a prediction for that match"}.to_json
-    end
-end
-
-put '/forecasts/:id' do
-    forecast = Forecast.find_by(id: params['id'])
-    if(forecast) then
-        forecast.result = params['result']
-        forecast.home_goals = params['home_goals']
-        forecast.away_goals = params['away_goals']
-        forecast.tournament_id = params['tournament_id']
-        if(!forecast.check_match_player && forecast.resultConsist) then
-            forecast.points = 0
-            forecast.save
-             
-        else
-            status 400
-            {:status => 400, :mge => "There is already a prediction for that match"}.to_json
-        end
-    else
-        status 400
-        {:status => 404, :mge => "This forecast doesn't exists"}.to_json
-    end
-end
-
 
   #-------------------------------------------------------------------------#
 
@@ -239,28 +197,6 @@ end
 
   ## -- Teams Controller -- ##
 
-  ## -- Math_Day Controller -- ##
-
-  post '/match_days' do
-    match_day = MatchDay.new
-    match_day.description = params['description']
-    match_day.tournament_id = Tournament.find_by(name: params['tournament_name']).id
-    match = MatchDay.exists?(description: match_day.description, tournament_id: match_day.tournament_id)
-    if(match)
-      @msg = {status: 400, msg: "Match day already exists"}
-      @tournaments = Tournament.all
-      return  erb :'admin/match_days'
-    end
-    if (match_day.save)
-      @msg = {status: 201, msg: "Match day created"}
-    else
-      @msg = {status: 400, msg: "Match day not created, try again"}
-    end
-    @tournaments = Tournament.all
-    erb :"admin/match_days"
-  end
-
-## -- Match_Day Controller -- ##
 
 
 
@@ -270,10 +206,6 @@ get '/add_tournament' do
   erb :"admin/tournaments"
 end
 
-get '/add_match_day' do
-  @tournaments = Tournament.all
-  erb :"admin/match_days"
-end
 
 
 ## -- Add Team for Admin -- ##
