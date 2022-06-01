@@ -2,6 +2,11 @@ class MatchDayController < App
     
   ## -- Math_Day Controller -- ##
 
+  get '/match_days/new' do
+    @tournaments = Tournament.all
+    erb :"admin/match_days"
+  end
+  
   post '/match_days' do
     match_day = MatchDay.new
     match_day.description = params['description']
