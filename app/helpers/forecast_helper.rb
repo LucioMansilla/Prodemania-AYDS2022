@@ -18,11 +18,11 @@ def post_forecast
     logger.info(params)
     if(!forecast.check_match_player && forecast.resultConsist) then
         forecast.save
-        flash[:success] = "OK"
+        flash[:success] = "Forecast created"
         redirect '/matches?match_day_id=' + forecast.match.match_day_id.to_s
     else
-        status 400
-        {:status => 400, :mge => "There is already a prediction for that match"}.to_json
+        flash[:error] = "Error, there is already a forecast for this match or the result is not consistent" 
+        redirect '/matches?match_day_id=' + forecast.match.match_day_id.to_s
     end
 end
 
