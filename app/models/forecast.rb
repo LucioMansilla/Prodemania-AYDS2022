@@ -16,7 +16,6 @@ class Forecast < ActiveRecord::Base
       if self.match.has_result?
         if self.guess_result 
           total_points += 1
-    
           if self.guess_goals
             total_points += 2
           end   
@@ -43,8 +42,13 @@ class Forecast < ActiveRecord::Base
       end
     end
 
-    def check_match_player
-        Forecast.exists?(player_id: self.player_id, match_id: self.match_id)
+    #return the forecast or the empty string if it doesn't exists
+     def self.check_match_player(player_id, match_id)
+      f =  Forecast.find_by(player_id: player_id, match_id: match_id)
+      if f?
+        return f
+      else 
+        return Forecast.new(:player_id => player_id, :match_id => match_id)
     end
 
     def resultConsist
