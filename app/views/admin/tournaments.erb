@@ -1,14 +1,11 @@
 <h1 style="color: black;" >Add tournament</h1>
 
-
-<% if @msg%>
-<% if @msg[:status] == 200 %>
-  <p style="color: green;"><%= @msg[:msg] %></p>
-  <%else%>
-  <p style="color: red;"><%= @msg[:msg]%> </p>
-<% end %>
+<% if flash[:sucess]%>
+  <p style="color: green;"><%= flash[:sucess]%></p>
 <%end %>
-
+<%if flash[:error]%>
+  <p style="color: red;"><%= flash[:error]%> </p>
+<%end %>
 
 <form action='/tournaments' method='POST'>
     <label for='Name'>Name: </label><input id='name' name='name' type='text' placeholder='name'></input>
@@ -17,10 +14,11 @@
     <h2>Existing Tournaments!! </h2>
     <label for="tournament">Tournaments: </label>
        <select id="tournament_id" name="tournament_name">
-           <% @tournaments.each do |tournament| %>
+           <%@tournament.each do |tournament| %>
               <%= "<option value='#{tournament.name}'>#{tournament.name}</option>" %>
           <% end %>
        </select>
     <br>
 
 </form>
+
