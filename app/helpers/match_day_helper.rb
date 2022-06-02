@@ -3,7 +3,7 @@ module MatchDayHelper
 
   def new_match_days
     @tournaments = Tournament.all
-    erb :"admin/match_days"
+    erb :"admin/new_match_days"
   end
   
   def post_match_day
@@ -12,17 +12,20 @@ module MatchDayHelper
     match_day.tournament_id = Tournament.find_by(name: params['tournament_name']).id
     match = MatchDay.exists?(description: match_day.description, tournament_id: match_day.tournament_id)
     if(match)
-      @msg = {status: 400, msg: "Match day already exists"}
-      @tournaments = Tournament.all
-      return  erb :'admin/match_days'
+     # @msg = {status: 400, msg: "Match day already exists"}
+     flash[:error] = "Match day already exists" 
+     redirect '/match_days/new'
     end
     if (match_day.save)
-      @msg = {status: 201, msg: "Match day created"}
+      flash[:success] = "Match day created"
+      #@msg = {status: 201, msg: "Match day created"}
     else
-      @msg = {status: 400, msg: "Match day not created, try again"}
+      flash[:error] = "Match day not created"
+      #@msg = {status: 400, msg: "Match day not created, try again"}
     end
-    @tournaments = Tournament.all
-    erb :"admin/match_days"
+    #@tournaments = Tournament.all
+    #erb :"admin/match_days"
+    redirect '/match_days/new'
   end
 end
 ## -- Match_Day Controller -- ##
