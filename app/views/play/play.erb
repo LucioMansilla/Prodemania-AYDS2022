@@ -1,0 +1,78 @@
+<%if !@tournaments.empty?%>
+  <h1>Selecciona el torneo para el cual quieres realizar la prediccion:</h1>
+
+  <ul>
+    <% @tournaments.each do |t|%>
+      <a href="/play?id_tournament=<%= t.id%>"><li><%= t.name%></li></a>
+    <% end %>
+  </ul>
+
+  <%if @torneo_selected%>
+    <%if !@match_days.empty?%>
+      <h1>Selecciona la instancia para la cual quieres realizar la prediccion:</h1>
+
+      <ul>
+        <% @match_days.each do |t|%>
+          <a href="/play?id_tournament=<%= t.tournament_id%>&id_match_day=<%= t.id%>"><li><%= t.description%></li></a>
+        <% end %>
+      </ul>
+
+      <%if @match_day_selected%>
+        <%if !@matches.empty?%>
+
+          <h1>Partidos:</h1>
+
+          <ul>
+            <% @matches.each do |t|%>
+              <form action="/forecasts" method="post">
+
+                <%# Si el partido se jugo muestra el resultado y no deja realizar una prediccion %>
+                <%if t.has_result?%>
+                  <li>
+                    <%=t.home.name%> vs <%=t.away.name%>
+                    Resultado: <%=t.result%>
+                    Goles local: <%=t.home_goals%>
+                    Goles visitante: <%=t.away_goals%>
+                    No puedes realizar predicciones a partidos que ya se han jugado.</p>
+                  </li>
+
+                <%else%>
+
+                  <li>
+                    <%=t.home.name%> vs <%=t.away.name%>
+                    Resultado: <select name="result">
+                      <option value="HOME">HOME</option>
+                      <option value="AWAY">AWAY</option>
+                      <option value="DRAW">DRAW</option>
+                    </select>
+                    Goles local: <input type="number" name="home_goals" placeholder="Goles local">
+                    Goles visitante: <input type="number" name="away_goals" placeholder="Goles visitante">
+                    <input type="submit" value="Realizar predicción">
+                    <!-- add hidden input for send match_id -->
+                    <input type="hidden" name="match_id" value=<%=t.id%>>
+                    <!-- add the same input for the tournament in t.tournament_id-->
+                    <input type="hidden" name="tournament_id" value=<%=t.match_day.tournament_id%>> 
+                  </li>
+                  <br>
+                <%end%>
+              </form>
+
+            <% end %>
+          </ul>
+        <%else%>
+          <p>No hay partidos para la instancia seleccionada.</p>
+        <%end%>
+      <%end%>
+      
+
+    <%else%>
+      <p>No hay instancias disponibles correspondientes al toreno seleccionado.</p>
+    <%end%>
+  <%end%>
+
+<%else%>
+  <p>No hay torneos disponibles para jugar.</p>
+<%end%>
+
+
+<a href="/home">Volver a Inicio</a>

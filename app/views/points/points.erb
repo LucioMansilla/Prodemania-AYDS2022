@@ -1,9 +1,31 @@
-<h1>Puntajes <%= @points.first.tournament.name %></h1>
+<%if !@tournaments.empty?%>
+  <h1>Selecciona el torneo para el cual quieres consultar la tabla de puntos:</h1>
 
-<ul>
-  <% @points.each do |p|%>
-    <li><%= p.player[:name]%>  <%= p[:total_points]%> pts</li>
-  <% end %>
-</ul>
+  <ul>
+    <% @tournaments.each do |t|%>
+      <a href="/points?id_tournament=<%= t.id%>"><li><%= t.name%></li></a>
+    <% end %>
+  </ul>
 
-<a href="/inicio">Volver a Inicio</a>
+  <%if @torneo_selected%>
+
+    <% if !@points.empty? %>
+      <h1>Puntajes <%= @points.first.tournament.name %></h1>
+
+      <ul>
+        <% @points.each do |p|%>
+          <li><%= p.player[:name]%>  <%= p[:total_points]%> pts</li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>Aun no se realizaron predicciones sobre el torneo seleccionado.</p>
+    <% end %>
+
+    
+  <%end%>
+
+<%else%>
+  <p>No hay torneos disponibles.</p>
+<%end%>
+
+<a href="/home">Volver a Inicio</a>
