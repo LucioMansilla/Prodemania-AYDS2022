@@ -4,8 +4,22 @@ require 'sinatra/reloader' if Sinatra::Base.environment == :development
 require 'logger'
 require "sinatra/activerecord"
 require_relative '../models/init'
+require 'sinatra/flash'
+
+require_relative '../helpers/game_helper'
+require_relative '../helpers/match_helper'
+require_relative '../helpers/forecast_helper'
+require_relative '../helpers/admin_helper'
+require_relative '../helpers/match_day_helper'
 
 class App < Sinatra::Application
+
+  helpers GameHelperModule
+  helpers MatchHelperModule
+  helpers ForecastHelper
+  helpers AdminHelper
+  helpers MatchDayHelper
+
   configure :production, :development do
     enable :logging
     logger = Logger.new(STDOUT)
@@ -21,6 +35,7 @@ class App < Sinatra::Application
   end
 
   configure do 
+    register Sinatra::Flash
     set :views, 'app/views'
     set :public_folder, 'public'
     set :sessions, true
@@ -33,15 +48,14 @@ class App < Sinatra::Application
   end
 
   get '/gestion' do
-    erb :"/admin/options"
+    get_menu_admin
   end
-
 
      ## -- Session -- ##
      before do
       if session[:player_id]
         @current_player = Player.find_by(id: session[:player_id])
-       admin_pages = ["/teams","/tournaments","/matches","/match_day_create","/add_tournament","/gestion","/add_team"]
+       admin_pages = ["/teams","/tournaments","/matches/new", "/matches/update" ,"/match_day_create","/add_tournament","/gestion","/add_team"]
        if(admin_pages.include?(request.path_info))
          if(@current_player.is_admin != true)
            redirect '/inicio'
@@ -81,7 +95,7 @@ class App < Sinatra::Application
 
     if player && player.authenticate(params[:password])
       session[:player_id] = player.id 
-      redirect '/inicio'
+      redirect '/home'
     else
       redirect '/login'
     end
@@ -92,24 +106,47 @@ class App < Sinatra::Application
     redirect '/login'
   end
 
-  get '/inicio' do 
-    erb :inicio
+  get '/home' do 
+    home
   end
 
-  get '/jugar' do 
-    @tournaments = Tournament.all 
-    erb :"jugar/tournaments_jugar"
+  get '/play' do 
+    play
   end
 
   get '/points' do
-    @tournaments = Tournament.all 
-    erb :"points/tournament_points"
+    points
   end
 
-  get '/points/:tournament_id' do
-    @points = Point.where(tournament_id: params[:tournament_id]) 
-    erb :"points/points"
+  get '/matches/new' do
+    new_match
   end
+
+  get '/matches/update' do
+    matches
+  end
+
+  post '/matches' do
+    create_match
+  end
+
+  put '/matches' do
+    update_match
+  end
+
+  post '/forecasts' do
+    post_forecast
+  end
+
+  get '/match_days/new' do
+    new_match_days
+  end 
+
+  post '/match_days' do
+    post_match_day
+  end 
+
+
 
 
   ## -- Tournament Controller -- ##
@@ -151,26 +188,6 @@ class App < Sinatra::Application
 
   #-------------------------------------------------------------------------#
 
-  ## -- Match Controller -- ##
-  get '/matches' do
-    @matches = Match.where(match_day_id: params[:match_day_id])
-    erb :"jugar/matches"
-  end
-
-  post '/matches' do
-
-    match = Match.new
-    match.datetime = params['datetime']
-    match.match_type = params['match_type']
-    match.match_day_id = params['match_day_id']
-    match.away_id = params['away_id']
-    match.home_id = params['home_id']
-
-    match.save
-    status 201
-    {:status => 201, :mge => "The match was created"}.to_json
-
-  end
 
   ## -- Teams Controller -- ##
 
@@ -212,6 +229,10 @@ end
 get '/add_team' do
   @tournaments = Tournament.all
   erb :"admin/teams"
+end
+
+get '/*' do
+  redirect '/home'
 end
 
 end
