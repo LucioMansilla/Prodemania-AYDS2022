@@ -24,5 +24,5 @@ module MatchDayHelper
     @tournaments = Tournament.all
     erb :"admin/match_days"
   end
-
+end
 ## -- Match_Day Controller -- ##
