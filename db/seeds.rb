@@ -18,11 +18,11 @@ everton = Team.create(name: "Everton")
 
 premier_league.teams << [chelsea, liverpool, arsenal, everton]
 
-m1 = Match.create(home: boca, away: river, match_day: fecha_1_arg)
-m2 = Match.create(home: indep, away: racing, match_day: fecha_1_arg)
+m1 = Match.create(home: boca, away: river, match_day: fecha_1_arg, match_type: "LEAGUE")
+m2 = Match.create(home: indep, away: racing, match_day: fecha_1_arg, match_type: "LEAGUE")
 
-m3 = Match.create(home: chelsea, away: liverpool, match_day: fecha_1_premier)
-m4 = Match.create(home: arsenal, away: everton, match_day: fecha_1_premier)
+m3 = Match.create(home: chelsea, away: liverpool, match_day: fecha_1_premier, match_type: "LEAGUE")
+m4 = Match.create(home: arsenal, away: everton, match_day: fecha_1_premier, match_type: "LEAGUE")
 
 p = Player.create(name:"Mateo", email: "mateo@correo.com", password: "12345", is_admin: true)
 l = Player.create(name:"Lucio", email: "lucio@correo.com", password: "12345", is_admin: true)
