@@ -1,0 +1,56 @@
+<%if !@tournaments.empty?%>
+  <h1>Selecciona el torneo para el cual quieres agregar un partido:</h1>
+
+  <ul>
+    <% @tournaments.each do |t|%>
+      <a href="/matches/new?id_tournament=<%= t.id%>"><li><%= t.name%></li></a>
+    <% end %>
+  </ul>
+
+  <%if @torneo_selected%>
+
+    <h1>Crear Partido para <%=@selected_tournament.name%></h1>
+
+    <form action="/matches" method="post">
+      Jornada: <select name="match_day_id">
+        <%@match_days.each do |t|%>
+        <option value="<%=t.id%>"><%=t.description%></option>
+        <%end%>
+      </select><br><br> 
+      Equipo Local: <select name="home_id">
+        <%@selected_tournament.teams.each do |t|%>
+        <option value="<%=t.id%>"><%=t.name%></option>
+        <%end%>
+      </select><br><br>
+      Equipo Visitante: <select name="away_id">
+        <%@selected_tournament.teams.each do |t|%>
+        <option value="<%=t.id%>"><%=t.name%></option>
+        <%end%>
+      </select><br><br>
+
+      Tipo de Partido: <select name="match_type">
+        <option value="LEAGUE">Liga/Grupo</option>
+        <option value="ELIMINATION">Eliminación</option>
+      </select><br><br>
+
+      <input type="hidden" name="tournament_id" value="<%=@selected_tournament.id%>">
+
+      <input type="submit" value="Crear Partido">
+
+      
+    </form>
+    
+  <%end%>
+
+  <% if flash[:error] %>
+    <p><%=flash[:error]%></p>
+  <% else %>
+    <p><%=flash[:success]%></p>
+  <% end %>
+
+<%else%>
+  <p>No hay torneos disponibles para jugar.</p>
+<%end%>
+
+
+<a href="/home">Volver a Inicio</a>
