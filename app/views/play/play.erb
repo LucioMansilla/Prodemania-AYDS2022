@@ -22,6 +22,12 @@
 
           <h1>Partidos:</h1>
 
+          <% if flash[:error] %>
+            <p><%=flash[:error]%></p>
+          <% else %>
+            <p><%=flash[:success]%></p>
+          <% end %>
+
           <ul>
             <% @matches.each do |t|%>
               <form action="/forecasts" method="post">
@@ -48,6 +54,7 @@
                     Goles local: <input type="number" name="home_goals" placeholder="Goles local">
                     Goles visitante: <input type="number" name="away_goals" placeholder="Goles visitante">
                     <input type="submit" value="Realizar predicción">
+
                     <!-- add hidden input for send match_id -->
                     <input type="hidden" name="match_id" value=<%=t.id%>>
                     <!-- add the same input for the tournament in t.tournament_id-->
@@ -76,3 +83,5 @@
 
 
 <a href="/home">Volver a Inicio</a>
+
+

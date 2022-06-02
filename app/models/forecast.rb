@@ -45,10 +45,11 @@ class Forecast < ActiveRecord::Base
     #return the forecast or the empty string if it doesn't exists
      def self.check_match_player(player_id, match_id)
       f =  Forecast.find_by(player_id: player_id, match_id: match_id)
-      if f?
+      if f != nil
         return f
       else 
         return Forecast.new(:player_id => player_id, :match_id => match_id)
+      end
     end
 
     def resultConsist
