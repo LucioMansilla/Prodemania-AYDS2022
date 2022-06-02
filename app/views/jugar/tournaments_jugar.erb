@@ -1,9 +1,0 @@
-<h1>Lista de Torneos</h1>
-
-<ul>
-  <% @tournaments.each do |t|%>
-    <a href="/match_days?tournament_id=<%= t.id%>"><li><%= t.name%></li></a>
-  <% end %>
-</ul>
-
-<a href="/inicio">Volver a Inicio</a>
