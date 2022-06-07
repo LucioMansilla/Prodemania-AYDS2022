@@ -3,18 +3,18 @@ require 'bundler/setup'
 require 'sinatra/reloader' if Sinatra::Base.environment == :development
 require 'logger'
 require "sinatra/activerecord"
-require_relative '../models/init'
+require_relative './models/init'
 require 'sinatra/flash'
 
-require_relative '../helpers/game_helper'
-require_relative '../helpers/match_helper'
-require_relative '../helpers/forecast_helper'
-require_relative '../helpers/admin_helper'
-require_relative '../helpers/match_day_helper'
+require_relative './helpers/game_helper'
+require_relative './helpers/match_helper'
+require_relative './helpers/forecast_helper'
+require_relative './helpers/admin_helper'
+require_relative './helpers/match_day_helper'
 
-require_relative '../helpers/team_helper'
-require_relative '../helpers/tournament_helper'
-require_relative '../helpers/session_helper'
+require_relative './helpers/team_helper'
+require_relative './helpers/tournament_helper'
+require_relative './helpers/session_helper'
 
 class App < Sinatra::Application
 
@@ -160,10 +160,6 @@ end
 get '/teams/new' do
  new_team
 end
-
-get '/new' do
-prueba
-end      
 
 ## -- Tournament for Admin -- #
 
