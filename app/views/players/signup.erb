@@ -1,10 +1,33 @@
-<h1>Registrarse</h1>
+<div class="container-fluid bg-secondary-color h-100">
+    <div class="row h-100">
+      <div class="col-12 d-flex flex-column justify-content-center align-items-center">
+        <div>
+          <img src="/images/logo.png" class="img-fluid" alt="logo">
+        </div>
+        <div class="p-3 w-30 mx-auto bg-white rounded-4">
+          <h3 class="mb-3 mx-4">Registrarse</h3>
+          <form action="/signup" method="post">
+            <div class="form-floating mb-3 mx-4">
+              <input type="text" name="name" class="form-control" id="floatingInput" placeholder="Nombre">
+              <label for="floatingInput">Nombre</label>
+            </div>
+            <div class="form-floating mb-3 mx-4">
+              <input type="email" name="email" class="form-control" id="floatingEmail" placeholder="Email">
+              <label for="floatingEmail">Email</label>
+            </div>
+            <div class="form-floating mb-3 mx-4">
+              <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Contraseña">
+              <label for="floatingPassword">Contraseña</label>
+            </div>
+  
+            <div class="mx-4">
+              <button id="submit-button" type="submit" class="btn bg-primary-color mb-3">Registrarse</button>
+            </div>
 
-<form action="/signup" method="post">
-  Nombre: <input type="text" name="name"><br><br>
-  Email: <input type="email" name="email"><br><br>
-  Contraseña: <input type="password" name="password"><br><br>
-  <input type="submit" value="Registrarse">
-</form>
-
-<a href="/login">Inicia Sesion</a>
+            <a id="link" class="ms-4 primary-color" href="/login">Ya tienes cuenta? Inicia sesión</a>
+            
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
