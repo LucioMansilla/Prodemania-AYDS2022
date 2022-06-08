@@ -1,0 +1,28 @@
+html, body {
+  height: 100%
+}
+
+.bg-secondary-color {
+  background-color: #242424
+}
+
+.primary-color {
+  color: #3aa17a
+}
+
+.bg-primary-color {
+ background-color: #3aa17a
+}
+
+#link:hover {
+  color: #242424
+}
+
+input.form-control{
+  background-color: #f2f2f2 !important;
+}
+
+#submit-button:hover {
+  background-color: #49be91 !important;
+  border-color: #49be91;
+}
