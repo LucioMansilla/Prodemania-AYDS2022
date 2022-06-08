@@ -5,11 +5,22 @@ module SessionHelper
     end
 
     def new_authentication
+				logger.info(params[:name])
+				if Player.exists?(name: params[:name])
+					flash[:error] = "Ya existe un usuario con ese nombre"
+					redirect '/signup'
+				end
+				if Player.exists?(email: params[:email])
+					flash[:error] = "Ya existe un usuario con ese email"
+					redirect '/signup'
+				end
         player = Player.new(params)
-    
-        if !player.save  
+
+        if !player.save
+					flash[:error] = "No se ha podido registrar el usuario"  
           redirect '/signup'
         else
+          flash[:success] = "Usuario registrado con éxito!"
           redirect '/login'
         end  
     end

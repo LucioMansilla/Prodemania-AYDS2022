@@ -22,6 +22,9 @@
   
             <div class="mx-4">
               <button id="submit-button" type="submit" class="btn bg-primary-color mb-3">Registrarse</button>
+              <% if flash[:error]%>
+                <p class="text-danger"><%= flash[:error]%></p>
+              <%end %>
             </div>
 
             <a id="link" class="ms-4 primary-color" href="/login">Ya tienes cuenta? Inicia sesión</a>
