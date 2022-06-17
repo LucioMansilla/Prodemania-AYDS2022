@@ -125,7 +125,7 @@ class App < Sinatra::Application
     create_match
   end
 
-  put '/matches' do
+  put '/matches/:match_id' do
     update_match
   end
 

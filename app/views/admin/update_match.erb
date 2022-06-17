@@ -24,7 +24,7 @@
 
          <ul>
             <% @matches.each do |t|%>
-              <form action="/matches" method="post">
+              <form action="/matches/<%=t.id%>" method="post">
               <input type="hidden" name="_method" value="PUT">  
                   <li>
                     <%=t.home.name%> vs <%=t.away.name%>
@@ -38,7 +38,7 @@
                     <input type="submit" value="Actualizar partido">
                     
                     <!-- add hidden input for send match_id -->
-                    <input type="hidden" name="match_id" value=<%=t.id%>>
+                    <%# <input type="hidden" name="match_id" value=<%=t.id%>> %>
                     <input type="hidden" name="match_day_id" value=<%=t.match_day_id%>>
                     <!-- add the same input for the tournament in t.tournament_id-->
                     <input type="hidden" name="tournament_id" value=<%=t.match_day.tournament_id%>> 
