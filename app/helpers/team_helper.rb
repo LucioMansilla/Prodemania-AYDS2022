@@ -10,7 +10,7 @@ module TeamHelper
         name_team = params['name']
         team = Team.new
         team.name = params['name']
-        tournament = Tournament.all.where(name:params['tournament_name'])
+        tournament = Tournament.all.where(name:params['tournament_names'])
         team.tournaments << tournament    
 
         if(!Team.exists?(name:name_team) && team.save)

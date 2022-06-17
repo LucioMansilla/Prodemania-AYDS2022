@@ -1,4 +1,4 @@
-<h1>Add Team</h1>
+<h1 class="text-white">Add Team</h1>
 
 <% if flash[:sucess]%>
   <p style="color: green;"><%= flash[:sucess]%></p>
@@ -8,14 +8,19 @@
 <%end %>
 
 <form action='/teams' method='POST'>
-    <label for='name'>Name: </label> <input id='name' name='name' type='text' placeholder='name'> 
+    <label class="text-white" for='name'>Name: </label> <input id='name' name='name' type='text' placeholder='name'> 
     <button type='submit'>Add</button>
-    <h2> Select the tournament for the team</h2>
-    <label for="tournament">Tournaments: </label>
+    <h2 class="text-white"> Select the tournament for the team</h2>
+    <!-- <label class="text-white" for="tournament">Tournaments: </label>
      <select multiple="multiple" id="tournament_id" name="tournament_name[]">
            <%@tournaments.each do |tournament| %>
               <%= "<option value='#{tournament.name}'>#{tournament.name}</option>" %>
           <% end %>
-       </select>
+       </select> -->
+       <p class="text-white">Torneos: </p>
+        <%@tournaments.each do |tournament| %>
+          <input type="checkbox" name="tournament_names[]" value="<%= tournament.name %>"><span class="text-white"><%= tournament.name %></span><br>
+        <% end %>
+
     <br>
 </form>
