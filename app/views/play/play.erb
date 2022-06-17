@@ -49,7 +49,9 @@
                     Resultado: <select name="result">
                       <option value="HOME">HOME</option>
                       <option value="AWAY">AWAY</option>
-                      <option value="DRAW">DRAW</option>
+                      <% if t.match_type == 'LEAGUE' %>
+                        <option value="DRAW">DRAW</option>
+                      <% end %>
                     </select>
                     Goles local: <input type="number" name="home_goals" placeholder="Goles local">
                     Goles visitante: <input type="number" name="away_goals" placeholder="Goles visitante">
