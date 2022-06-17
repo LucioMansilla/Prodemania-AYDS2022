@@ -52,9 +52,10 @@ class Forecast < ActiveRecord::Base
       end
     end
 
-    def resultConsist
+    def consistentResult
+      if self.match.match_type == 'LEAGUE'
         if self.result == 'HOME' &&  self.home_goals > self.away_goals
-            return true
+          return true
         elsif self.result == 'AWAY' &&  self.home_goals < self.away_goals
             return true
         elsif self.result == 'DRAW' &&  self.home_goals == self.away_goals
@@ -62,5 +63,17 @@ class Forecast < ActiveRecord::Base
         else
             return false
         end
+      else
+        if self.result == 'HOME' &&  self.home_goals >= self.away_goals
+          return true
+        elsif self.result == 'AWAY' &&  self.home_goals <= self.away_goals
+            return true
+        elsif self.result == 'DRAW'
+            return false
+        else
+            return false
+        end
+      end
+        
     end
 end

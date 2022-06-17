@@ -7,6 +7,7 @@ class Match < ActiveRecord::Base
   before_update :calculate_points,  if: :result_or_goals_changed?
   validates_presence_of :match_type, :home_id, :away_id, :match_day_id
   validates :result, acceptance: { accept: ['HOME', 'AWAY','DRAW'] }
+  validates :match_type, acceptance: { accept: ['LEAGUE', 'ELIMINATION'] }
 
   def has_result?
     self.result != nil and self.home_goals != nil and self.away_goals != nil
@@ -34,5 +35,28 @@ class Match < ActiveRecord::Base
     self.result_changed? || self.home_goals_changed? || self.away_goals_changed? 
   end
   
-
+  def consistentResult
+    if self.match_type == 'LEAGUE'
+      if self.result == 'HOME' &&  self.home_goals > self.away_goals
+        return true
+      elsif self.result == 'AWAY' &&  self.home_goals < self.away_goals
+          return true
+      elsif self.result == 'DRAW' &&  self.home_goals == self.away_goals
+          return true
+      else
+          return false
+      end
+    else
+      if self.result == 'HOME' &&  self.home_goals >= self.away_goals
+        return true
+      elsif self.result == 'AWAY' &&  self.home_goals <= self.away_goals
+          return true
+      elsif self.result == 'DRAW'
+          return false
+      else
+          return false
+      end
+    end
+      
+  end
 end
