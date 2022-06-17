@@ -1,5 +1,5 @@
 class Match < ActiveRecord::Base
-  has_many :forecasts
+  has_many :forecasts, dependent: :destroy
   belongs_to :match_day
   belongs_to :home, class_name: "Team"
   belongs_to :away, class_name: "Team"

@@ -1,7 +1,7 @@
 class Player < ActiveRecord::Base
   
-    has_many :forecasts 
-    has_many :points 
+    has_many :forecasts, dependent: :destroy
+    has_many :points, dependent: :destroy
     has_many :tournaments, through: :points
 
     validates_presence_of :name, :email, :password
