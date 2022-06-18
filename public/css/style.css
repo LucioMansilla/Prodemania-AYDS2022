@@ -1,4 +1,10 @@
-html, body {
+html {
+  height: 100%;
+  position: relative;
+  background-color: #242424;
+}
+
+body {
   height: 100%;
   background-color: #242424;
 }
@@ -26,4 +32,25 @@ input.form-control{
 #submit-button:hover {
   background-color: #49be91 !important;
   border-color: #49be91;
+}
+
+#header {
+  background-color: #3aa17a;
+  height: 50px;
+}
+
+#footer {
+  background-color: #929292;
+  height: 50px;
+  position: fixed;
+  width: 100%;
+  bottom: 0; 
+}
+
+#link-icons {
+  color: #242424 !important;
+}
+
+#link-icons:hover {
+  color: #242424 !important;
 }

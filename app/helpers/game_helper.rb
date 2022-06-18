@@ -1,7 +1,7 @@
 module GameHelperModule
 
   def home
-    erb :'home'
+    erb :'home', :layout => :layout_2
   end
 
   def play
