@@ -14,7 +14,7 @@
 </head>
 <body>
   
-  <div class="container-fluid bg-secondary-color h-100">
+  <div style="min-height: calc(100vh - 50px); padding-bottom: 20px;" class="container-fluid bg-secondary-color">
     <div class="row" id="header">
       <div class="col-12 d-flex justify-content-around align-items-center">
         <div>
@@ -34,11 +34,10 @@
     
       <%= yield%>
     
-    <div class="row" id="footer">
-      <div class="col-12 d-flex justify-content-center align-items-center">
-        <p class="mb-0">Dichiara Brenda - Mansilla Lucio - Vieyra Mateo</p>
-      </div>
-    </div>
+    
+  </div>
+  <div class="d-flex justify-content-center align-items-center" id="footer">
+      <p class="mb-0">Dichiara Brenda - Mansilla Lucio - Vieyra Mateo</p>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 </body>
