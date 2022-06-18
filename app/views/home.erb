@@ -1,9 +1,15 @@
-<h1>Bienvenido <%= @current_player.name %>!!!</h1>
-
-<a href="/play">JUGAR</a><br>
-<a href="/points">Ver Tabla de posiciones</a><br><br>
-<% if @current_player.is_admin %>
-  <a href="/gestion">Gestionar</a><br><br>
-<% end %>
-
-<a href="/logout">Cerrar sesion</a>
+<div class="row mt-5">
+  <div class="col-7 col-md-5 mx-auto align-self-center d-flex flex-column justify-content-center align-items-center">
+    <div style="width: 100%;" class="p-3 mt-5 mx-auto bg-primary-color rounded-2 d-flex justify-content-center align-items-center">
+      <a style="text-decoration: none;" id="link-icons" href="/play"><h3 class="mb-0 mx-4 anton">JUGAR</h3></a>
+    </div>
+    <div style="width: 100%;" class="p-3 mt-5 w-30 mx-auto bg-primary-color rounded-2 d-flex justify-content-center align-items-center">
+      <a style="text-decoration: none;" id="link-icons" href="/points"><h3 class="mb-0 mx-4 anton">PUNTOS</h3></a> 
+    </div>
+    <% if @current_player.is_admin %>
+    <div style="width: 100%;" class="p-3 mt-5 w-30 mx-auto bg-primary-color rounded-2 d-flex justify-content-center align-items-center">
+      <a style="text-decoration: none;" id="link-icons" href="/gestion"><h3 class="mb-0 mx-4 anton">GESTIONAR</h3></a>
+    </div>
+    <% end %>
+  </div>
+</div>

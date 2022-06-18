@@ -49,8 +49,13 @@ input.form-control{
 
 #link-icons {
   color: #242424 !important;
+  text-decoration: none !important;
 }
 
 #link-icons:hover {
   color: #242424 !important;
 }
+
+.anton {
+  font-family: 'Anton', sans-serif;
+} 
