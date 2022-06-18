@@ -2,7 +2,7 @@ module TournamentHelper
 
     def new_tournament
         @tournament = Tournament.all
-        erb :"admin/tournaments"
+        erb :"admin/tournaments", :layout => :layout_2
     end
 
     def create_tournament (name_tournament)
@@ -16,7 +16,7 @@ module TournamentHelper
             flash[:error] = "El torneo ya existe"
         end
 
-        redirect '/tournaments/new'
+        redirect '/tournaments'
     
     end
 

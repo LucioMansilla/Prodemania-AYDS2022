@@ -163,7 +163,7 @@ end
 
 ## -- Tournament for Admin -- #
 
-get '/tournaments/new' do
+get '/tournaments' do
 new_tournament
 end
 
