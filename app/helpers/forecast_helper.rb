@@ -7,7 +7,7 @@ module ForecastHelper
         forecast.result = params['result']
         forecast.home_goals = params['home_goals']
         forecast.away_goals = params['away_goals']
-        if(forecast.resultConsist) then            
+        if(forecast.consistentResult) then            
             forecast.tournament_id = params['tournament_id']
             logger.info(forecast)
             forecast.save

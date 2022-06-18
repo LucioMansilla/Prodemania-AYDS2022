@@ -17,7 +17,7 @@ module GameHelperModule
       @matches = Match.where(match_day_id: params['id_match_day'])
     end
 
-    erb :"play/play"
+    erb :"play/play", :layout => :layout_2
   end
 
   def points

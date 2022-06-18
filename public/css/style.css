@@ -31,6 +31,12 @@ input.form-control{
   border-color: #49be91;
 }
 
+.secondary-button:hover {
+  background-color: #242424 !important;
+  border-color: #242424;
+  color: #3aa17a;
+}
+
 #header {
   background-color: #3aa17a;
   height: 50px;
@@ -48,6 +54,15 @@ input.form-control{
 
 #link-icons:hover {
   color: #242424 !important;
+}
+
+.link-primary {
+  color: #49be91 !important;
+  text-decoration: none !important;
+}
+
+.link-primary:hover {
+  color: #49be91 !important;
 }
 
 .anton {

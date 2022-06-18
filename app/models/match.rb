@@ -51,8 +51,6 @@ class Match < ActiveRecord::Base
         return true
       elsif self.result == 'AWAY' &&  self.home_goals <= self.away_goals
           return true
-      elsif self.result == 'DRAW'
-          return false
       else
           return false
       end
