@@ -1,0 +1,168 @@
+<div class="row mt-5">
+  <div class="col-12 col-md-10 mx-auto">
+    <% if flash[:error] %>
+                <p class="text-white"><%=flash[:error]%></p>
+              <% else %>
+                <p class="text-white"><%=flash[:success]%></p>
+              <% end %>
+    <%if !@tournaments.empty?%>
+      <h3 class="text-white" >Selecciona el torneo para el cual quieres realizar la prediccion:</h3>
+
+      <ul style="font-size: 20px">
+        <% @tournaments.each do |t|%>
+          <a class="link-primary" href="/matches?id_tournament=<%= t.id%>"><li><%= t.name%></li></a>
+          <% end %>
+      </ul>
+
+      <%if @torneo_selected%>
+        <%if !@match_days.empty?%>
+          <h3 class="text-white">Selecciona la instancia para la cual quieres realizar la prediccion:</h3>
+
+          <ul style="font-size: 20px">
+            <% @match_days.each do |t|%>
+              <a class="link-primary" href="/matches?id_tournament=<%= t.tournament_id%>&id_match_day=<%= t.id%>"><li><%= t.description%></li></a>
+            <% end %>
+          </ul>
+
+          <%if @match_day_selected%>
+            <%if !@matches.empty?%>
+
+            <h3 class="text-white mt-5">Crear Partido para <%=@selected_tournament.name%></h1>
+            
+            <div class="row bg-primary-color rounded-2 p-2 mb-3">
+              <div class="col-6 d-flex flex-column justify-content-around align-items-center">
+                        <form action="/matches" method="post">
+                          <div class="d-flex mb-3  justify-content-around align-items-center">
+                         <label for="home_team_id"  style="font-size: 18px;" class="ms-5 fw-bold">Equipo Local:</label>
+                          <select id="sel1" onchange="giveSelection(this.value)" name="home_id" style="font-size: 18px;" class="ms-3 form-select-sm">
+                            <%@selected_tournament.teams.each do |t|%>
+                            <option value="<%=t.id%>"><%=t.name%></option>
+                             
+                            <%end%>
+                          </select>
+                         
+                        <label for="away_team_id" style="font-size: 18px;"  class="ms-5 fw-bold">Equipo Visitante:</label>
+                         <select id="sel2" name="away_id" class="ms-3 form-select-sm" style="font-size: 18px;" >
+                            <%@selected_tournament.teams.each do |t|%>
+                              <option value="<%=t.id%>" data-option="<%=t.id%>"><%=t.name%></option>
+                              <%end%>
+                          </select>
+                          <script>
+                            var sel1 = document.querySelector('#sel1');
+                            var sel2 = document.querySelector('#sel2');
+                            var options2 = sel2.querySelectorAll('option');
+
+                            function giveSelection(selValue) {
+                              sel2.innerHTML = '';
+                              for(var i = 0; i < options2.length; i++) {
+                                if(options2[i].dataset.option === selValue) {
+                                 
+                                }else{
+                                  sel2.appendChild(options2[i]);
+                                }
+                              }
+                            }
+
+                            giveSelection(sel1.value);
+                            </script>
+                        </div>
+                       <div class="col d-flex mb-3 justify-content-around align-items-center">
+                        <label for="date" style="font-size: 18px;" class="ms-5 fw-bold">Tipo:</label>
+                          <select name="match_type" class="ms-3 form-select-sm" style="font-size: 18px;">
+                            <option value="LEAGUE">Liga/Grupo</option>
+                            <option value="ELIMINATION">Eliminación</option>
+                          </select>
+                          <label for="date" style="font-size: 18px;" class="ms-5 fw-bold">Jornada:</label>
+                         <select name="match_day_id" class="ms-3 form-select-sm" style="font-size: 18px;">
+                           
+                            <option value="<%=@match_day_tournament.id%>"><%=@match_day_tournament.description%></option>
+                          </select>
+                        </div>
+                          <input type="hidden" name="tournament_id" value="<%=@selected_tournament.id%>">
+                        </div>
+
+                        <div class="col-3  d-flex flex-column justify-content-around align-items-center">
+
+                        </div>
+                        <div class="col-3  d-flex justify-content-around align-items-center">
+                          <button style="margin-bottom: 0 !important;" type="submit" class=" ms-5 btn bg-secondary-color primary-color secondary-button">Crear Partido</button>
+                        </div>
+                        </div>
+                    </form>
+                  
+              <h3 class="text-white">Actualizar Resultados:</h3>
+              
+              <% @matches.each do |t|%>
+               <form action="/matches/<%=t.id%>" method="post">
+               <input type="hidden" name="_method" value="PUT">
+                <div class="row bg-primary-color rounded-2 p-2 mb-3">
+                  <div class="col-10">
+                    <div class="row">
+                      <p class="col-6 col-md-3"><b>Fecha:
+                      <% if t.datetime != nil %>
+                        </b><%= t.datetime.strftime("%d-%m-%Y %H:%M")%>hs  
+                      <% else %>
+                        </b>A confirmar
+                      <% end %> 
+                      </p>
+                      <% if t.match_type == 'ELIMINATION' %>
+                        <p class="col-6 col-md-3"><b>Tipo: </b>Eliminación</p>
+                      <% else %>
+                        <p class="col-6 col-md-3"><b>Tipo: </b>Liga/Grupo</p>
+                      <% end %>
+                    </div>
+                    <div class="row align-items-center">
+                      <div class="col-12 col-md-3">
+                        <b class="mb-0 ms-3" style="font-size: 21px"><%=t.home.name%>  VS  <%=t.away.name%></b>
+                      </div>
+                      <div class="col-12 col-md-3">
+                        <label for="result" class=" fw-bold">Resultado:</label>
+                          <select class='form-select-sm' style="font-size: 16px;" name="result">
+                          <option value="HOME" >LOCAL</option>
+                          <option value="AWAY">VISITANTE</option>
+                          <% if t.match_type == 'LEAGUE' %>
+                          <option value="DRAW">EMPATE</option>
+                          <% end %>
+                        </select>
+                      </div>
+                      <div class="col-6 col-md-3 d-flex">
+                        <label for="localGoals" class=" fw-bold">Goles local:</label>
+                           <input class="ms-1 form-control form-control-sm" style="width: 50px;" min="0" type="number" name="home_goals">
+                      </div>
+                      <div class="col-6 col-md-3 d-flex">
+                        <label for="visitGoals" class=" fw-bold">Goles visitante:</label>
+                         <input class="ms-1 form-control form-control-sm" style="width: 50px;" min="0" type="number" name="away_goals">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-2 d-flex justify-content-center align-items-center">
+                    <button style="margin-bottom: 0 !important;" type="submit" class="btn bg-secondary-color primary-color secondary-button mb-3">Actualizar Partido</button>
+                    <input type="hidden" name="match_id" value=<%=t.id%>>
+                    <input type="hidden" name="tournament_id" value=<%=t.match_day.tournament_id%>> 
+                    <button style="margin-bottom: 0 !important;" type="submit" class=" btn bg-secondary-color primary-color secondary-button ms-3">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+               
+              </form>
+              <% end %>
+            <%else%>
+              <p class="text-white">No hay partidos para la instancia seleccionada.</p>
+            <%end%>
+          <%end%>
+          
+
+        <%else%>
+          <p class="text-white">No hay instancias disponibles correspondientes al toreno seleccionado.</p>
+        <%end%>
+      <%end%>
+
+    <%else%>
+      <p class="text-white">No hay torneos disponibles para jugar.</p>
+    <%end%>
+  </div>
+</div>
