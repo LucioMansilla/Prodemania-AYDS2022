@@ -36,7 +36,7 @@ module SessionHelper
         session[:player_id] = player.id 
         redirect '/inicio'
         else
-        flash[:error] = "Contraseña y/o usario incorrecto"
+        flash[:error] = "Contraseña y/o usuario incorrecto"
         redirect '/login'
         end
     end

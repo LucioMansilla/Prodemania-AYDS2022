@@ -14,14 +14,14 @@ module MatchDayHelper
     match = MatchDay.exists?(description: match_day.description, tournament_id: match_day.tournament_id)
     if(match)
      # @msg = {status: 400, msg: "Match day already exists"}
-     flash[:error] = "Match day already exists" 
+     flash[:error] = "Match Day ya existe." 
      redirect '/match_days/new'
     end
     if (match_day.save)
-      flash[:success] = "Match day created"
+      flash[:success] = "Match Day creado con éxito."
       #@msg = {status: 201, msg: "Match day created"}
     else
-      flash[:error] = "Match day not created"
+      flash[:error] = "El Match Day no pudo ser creado."
       #@msg = {status: 400, msg: "Match day not created, try again"}
     end
     #@tournaments = Tournament.all
@@ -33,9 +33,9 @@ module MatchDayHelper
   def delete_match_day
     match_day = MatchDay.find(params['match_day_id'])
     if (match_day.destroy)
-      flash[:success] = "Match day deleted"
+      flash[:success] = "Match day eliminado con éxito."
     else
-      flash[:error] = "Match day not deleted"
+      flash[:error] = " El Match day no pudo ser eliminado."
     end
     redirect '/match_days/new'
   end

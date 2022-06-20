@@ -13,7 +13,7 @@ module ForecastHelper
             forecast.save
             flash[:success] = "Predicción creada con exito!"
         else
-            flash[:error] = "Error el resultado no es consistente"
+            flash[:error] = "Error. El resultado no es consistente."
         end
         logger.info(params)
         redirect '/play?id_match_day=' + forecast.match.match_day_id.to_s + '&id_tournament=' + forecast.match.match_day.tournament_id.to_s

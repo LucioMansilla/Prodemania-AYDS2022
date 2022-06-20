@@ -14,11 +14,16 @@ module TeamHelper
         tournament = Tournament.all.where(name:params['tournament_names'])
         team.tournaments << tournament    
 
-        if(!Team.exists?(name:name_team) && team.save)
-            flash[:success] = "El equipo fue creado"             
+        if(!Team.exists?(name:name_team))
+            if(team.save)
+                flash[:success] = "El equipo fue creado con éxito."   
+            else
+                flash[:success] = "El equipo no pudo ser creado."   
+            end
         else
-            flash[:error] = "El equipo ya existe"        
+            flash[:error] = "El equipo ya existe." 
         end
+
         redirect '/teams/new'   
       end   
 
@@ -28,7 +33,7 @@ module TeamHelper
         if (team.destroy)
             flash[:success] = "El equipo fue eliminado con éxito"
             else
-            flash[:error] = "El equipo NO fue eliminado"
+            flash[:error] = "El equipo no pudo ser eliminado"
             end
         redirect '/teams/new'
         end
