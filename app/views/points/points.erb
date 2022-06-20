@@ -1,31 +1,42 @@
-<%if !@tournaments.empty?%>
-  <h1>Selecciona el torneo para el cual quieres consultar la tabla de puntos:</h1>
-
-  <ul>
-    <% @tournaments.each do |t|%>
-      <a href="/points?id_tournament=<%= t.id%>"><li><%= t.name%></li></a>
-    <% end %>
-  </ul>
-
-  <%if @torneo_selected%>
-
-    <% if !@points.empty? %>
-      <h1>Puntajes <%= @points.first.tournament.name %></h1>
+<div class="row mt-5">
+  <div class="col-12 col-md-10 mx-auto">
+    <%if !@tournaments.empty?%>
+      <h3 class="text-white" >Selecciona el torneo para el cual quieres consultar la tabla de puntos:</h3>
 
       <ul>
-        <% @points.each do |p|%>
-          <li><%= p.player[:name]%>  <%= p[:total_points]%> pts</li>
+        <% @tournaments.each do |t|%>
+          <a class="link-primary" href="/points?id_tournament=<%= t.id%>"><li><%= t.name%></li></a>
         <% end %>
       </ul>
-    <% else %>
-      <p>Aun no se realizaron predicciones sobre el torneo seleccionado.</p>
-    <% end %>
 
-    
-  <%end%>
+      <%if @torneo_selected%>
+        <% if !@points.empty? %>
+          <h3 class="text-white">Puntajes <%= @points.first.tournament.name %></h3>
+          <table style="border-color: #3aa17a;" class="text-white table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Puntos</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @points.each_with_index do |p,i|%>
+                <tr>
+                  <th scope="row"><%= i+1%></th>
+                  <td><%= p.player[:name]%></td>
+                  <td><%= p[:total_points]%> pts</td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <p class="text-white">Aun no se realizaron predicciones sobre el torneo seleccionado.</p>
+        <% end %>
+      <%end%>
 
-<%else%>
-  <p>No hay torneos disponibles.</p>
-<%end%>
-
-<a href="/home">Volver a Inicio</a>
+    <%else%>
+      <p class="text-white">No hay torneos disponibles para jugar.</p>
+    <%end%>
+  </div>
+</div>

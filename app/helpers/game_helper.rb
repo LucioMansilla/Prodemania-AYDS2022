@@ -27,10 +27,10 @@ module GameHelperModule
 
     if(params['id_tournament'])
       @torneo_selected = true
-      @points = Point.where(tournament_id: params['id_tournament'])
+      @points = Point.where(tournament_id: params['id_tournament']).order(total_points: :desc)
     end
 
-    erb :"points/points"
+    erb :"points/points", :layout => :layout_2
   end
 
 
