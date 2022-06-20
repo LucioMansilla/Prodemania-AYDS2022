@@ -1,5 +1,9 @@
 <div class=" d-flex flex colum row mt-5">
-
+  <% if flash[:error] %>
+      <p class="text-white"><%=flash[:error]%></p>
+    <% else %>
+      <p class="text-white"><%=flash[:success]%></p>
+    <% end %>
 </div>
 <div class="container-fluid bg-secondary-color h-300 mt-5">
   <div class="row h-300">
