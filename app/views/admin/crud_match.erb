@@ -25,9 +25,7 @@
           </ul>
 
           <%if @match_day_selected%>
-            <%if !@matches.empty?%>
-
-            <h3 class="text-white mt-5">Crear Partido para <%=@selected_tournament.name%></h1>
+          <h3 class="text-white mt-2">Crear Partido para <%=@selected_tournament.name%></h1>
             
             <form action="/matches" method="post">
               <input type="hidden" name="tournament_id" value="<%=@selected_tournament.id%>">
@@ -79,6 +77,9 @@
                 </div>
               </div>
             </form>
+            <%if !@matches.empty?%>
+
+            
                   
               <h3 class="text-white">Actualizar Resultados:</h3>
               
