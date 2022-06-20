@@ -1,26 +1,57 @@
-<h1 class="text-white">Add Team</h1>
+<div class="row mt-5">
+  <div class="col-7 col-md-5 mx-auto">
+    <h3 class="text-white">Crear Equipo: </h3>
+    <% if flash[:success]%>
+      <p class="text-white"><%= flash[:success]%></p>
+    <%end %>
+    <%if flash[:error]%>
+      <p class="text-white"><%= flash[:error]%> </p>
+    <%end %>
+    <div style="width: 60%;" class="p-3 mt-2 bg-primary-color rounded-2">
+      <form action='/teams' method='POST'>
+       <div class="row d-flex align-items-center">
+          <div class="col-9 d-flex flex-column">
+                  <div class="d-flex mb-3">
+                    <label style="font-size: 18px;" class="me-1 fw-bold" for="name">Nombre: </label><input class="form-control form-control-sm" id='name' name='name' type='text' placeholder='Nombre del equipo'></input>
+                  </div>
+                  <div>
+                    <label style="font-size: 18px;" class="me-1 fw-bold" for="name">Torneos:</label> 
+                  </div>
+                  <div>
+                    <%@tournaments.each do |tournament| %>
+                    <input type="checkbox" name="tournament_names[]" value="<%= tournament.name %>"><span class="text-white"><%= tournament.name %></span><br>
+                    <% end %>
+                  </div>
+            </div>
+          <div class="col-3">
+            <button style="margin-bottom: 0 !important;" type="submit" class="btn bg-secondary-color primary-color secondary-button">Crear</button>
+          </div>
+        </div>
+    </form> 
+    </div>
 
-<% if flash[:sucess]%>
-  <p style="color: green;"><%= flash[:sucess]%></p>
-<%end %>
-<%if flash[:error]%>
-  <p style="color: red;"><%= flash[:error]%> </p>
-<%end %>
-
-<form action='/teams' method='POST'>
-    <label class="text-white" for='name'>Name: </label> <input id='name' name='name' type='text' placeholder='name'> 
-    <button type='submit'>Add</button>
-    <h2 class="text-white"> Select the tournament for the team</h2>
-    <!-- <label class="text-white" for="tournament">Tournaments: </label>
-     <select multiple="multiple" id="tournament_id" name="tournament_name[]">
-           <%@tournaments.each do |tournament| %>
-              <%= "<option value='#{tournament.name}'>#{tournament.name}</option>" %>
-          <% end %>
-       </select> -->
-       <p class="text-white">Torneos: </p>
-        <%@tournaments.each do |tournament| %>
-          <input type="checkbox" name="tournament_names[]" value="<%= tournament.name %>"><span class="text-white"><%= tournament.name %></span><br>
-        <% end %>
-
-    <br>
-</form>
+    <h3 class="text-white mt-5">Equipos Creados: </h3>
+    <%@teams.each do |team| %>
+    <form action="/teams/<%=team.id%>" method="post">
+      <input type="hidden" name="_method" value="DELETE">  
+      <div style="width: 60%;" class="p-3 mt-2 bg-primary-color rounded-2 mb-3">
+        <div class="row d-flex align-items-cente">
+          <div class="col-8 d-flex flex-column">
+            <div>
+               <p  class="mb-0  fw-bold" style="font-size: 18px;" ><%= team.name%></p>
+            </div> 
+          </div>
+          <div class="col-lg-4 d-flex justify-content-around align-items-center">
+            <button style="margin-bottom: 0 !important;" type="submit" class="btn bg-secondary-color primary-color secondary-button">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+              </svg>
+            </button>
+          </div>
+        </div>  
+      </div>
+    </form>
+    <% end %>
+    </div>
+    </div>
