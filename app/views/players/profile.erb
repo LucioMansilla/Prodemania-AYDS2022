@@ -1,0 +1,31 @@
+<div class=" d-flex flex colum row mt-5">
+
+</div>
+<div class="container-fluid bg-secondary-color h-300 mt-5">
+  <div class="row h-300">
+    <div class="col-12 d-flex flex-column justify-content-center align-items-center">
+     
+      <div class="p-3 w-30 mx-auto bg-white rounded-4">
+        <h3 class="mb-3 mx-4">Editar Perfil</h3>
+        <form action="/edit" method="post">
+          <input type="hidden" name="_method" value="PUT">
+          <div class="form-floating mb-3 mx-4">
+            <input type="text" name="name" class="form-control" id="floatingInput" placeholder="Nombre">
+            <label for="floatingInput">Nuevo nombre</label>
+          </div>
+          <div class="form-floating mb-3 mx-4">
+            <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Contraseña">
+            <label for="floatingPassword">Contraseña</label>
+            </div>
+            <div class="form-floating mb-3 mx-4">
+            <input type="password" name="password_confirmation" class="form-control" id="floatingPassword" placeholder="Confirmar Contraseña">
+            <label for="floatingPassword">Confirmar Contraseña</label>
+            </div>
+            <div class="mx-4">
+            <button id="submit-button" type="submit" class="btn bg-primary-color mb-3">Editar Perfil</button>
+            </div>
+        </form>
+        </div>
+    </div>
+  </div>
+</div>
