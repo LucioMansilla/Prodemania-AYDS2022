@@ -1,19 +1,6 @@
 module MatchHelperModule
 
-  def new_match
-    @tournaments = Tournament.all 
-
-    if(params['id_tournament'])
-      @torneo_selected = true
-      @selected_tournament = Tournament.find_by_id(params['id_tournament'])
-      @match_days = MatchDay.where(tournament_id: params['id_tournament'])
-    end
-
-    erb :"admin/new_match"
-  end
-
   def create_match
-
     match = Match.new
     match.datetime = params['datetime']
     match.match_type = params['match_type']
@@ -26,7 +13,7 @@ module MatchHelperModule
     else
       flash[:error] = "Error al crear partido. Intente nuevamente."
     end
-    redirect '/matches/new'
+    redirect '/matches'
   end
 
   def update_match
@@ -41,7 +28,7 @@ module MatchHelperModule
     else
       flash[:error] = "Error al actualizar partido. Intente nuevamente."
     end
-    redirect '/matches/update'
+    redirect '/matches'
 
   end
 
@@ -50,15 +37,29 @@ module MatchHelperModule
 
     if(params['id_tournament'])
       @torneo_selected = true
+      @selected_tournament = Tournament.find_by_id(params['id_tournament'])
       @match_days = MatchDay.where(tournament_id: params['id_tournament'])
     end
 
     if(params['id_match_day'])
       @match_day_selected = true
       @matches = Match.where(match_day_id: params['id_match_day'])
+      @match_day_tournament = MatchDay.find_by_id(params['id_match_day'])
     end
 
-    erb :"admin/update_match"
+    erb :"admin/crud_match", :layout => :layout_2
+  end
+
+
+  def delete_match
+    match = Match.find_by_id(params['match_id'])
+    if (match.destroy)
+      flash[:success] = "Partido eliminado con exito."
+    else
+      flash[:error] = "Error al eliminar partido. Intente nuevamente."
+    end
+    redirect '/matches'
+
   end
 
 end
