@@ -22,10 +22,13 @@ module MatchHelperModule
     match.result = params['result']
     match.home_goals = params['home_goals']
     match.away_goals = params['away_goals']
+    match.datetime = params['datetime']
 
-    if(!match.consistentResult)
-      flash[:error] = "Error. El resultado no es consistente"
-      redirect 'matches/update?match_id=' + params[:match_id]
+    if(match.home_goals != nil && match.home_goals != nil)
+      if(!match.consistentResult)
+        flash[:error] = "Error. El resultado no es consistente"
+        redirect 'matches/update?match_id=' + params[:match_id]
+      end
     end
 
     if(match.save)

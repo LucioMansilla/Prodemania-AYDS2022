@@ -1,5 +1,5 @@
 <div class="row mt-5">
-  <div class="col-7 col-md-7 mx-auto">
+  <div class="col-11 col-md-7 mx-auto">
     <h3 class="text-white">Crear Match Day: </h3>
     <% if flash[:success]%>
       <p class="text-white"><%= flash[:success]%></p>
@@ -7,7 +7,7 @@
     <%if flash[:error]%>
       <p class="text-white"><%= flash[:error]%> </p>
     <%end %>
-    <div style="width: 60%;" class="p-3 mt-2 bg-primary-color rounded-2">
+    <div style="width: 60%;" class="box p-3 mt-2 bg-primary-color rounded-2">
       <form action='/match_days' method='POST'>
        <div class="row d-flex align-items-center">
           <div class="col-9 d-flex flex-column">
@@ -34,7 +34,7 @@
     <%@match_days.each do |matchDay| %>
     <form action="/match_days/<%=matchDay.id%>" method="post">
       <input type="hidden" name="_method" value="DELETE">  
-      <div style="width: 60%;" class="p-3 mt-2 bg-primary-color rounded-2 mb-3">
+      <div style="width: 60%;" class="box p-3 mt-2 bg-primary-color rounded-2 mb-3">
         <div class="row">
           <div class="col-8 d-flex flex-column  ">
             <div class="d-flex">

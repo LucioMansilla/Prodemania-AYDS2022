@@ -32,7 +32,7 @@
             <form action="/matches" method="post">
               <input type="hidden" name="tournament_id" value="<%=@selected_tournament.id%>">
               <div class="row bg-primary-color rounded-2 p-2 mb-3">
-                <div class="col-10">
+                <div class="col-12 col-md-10">
                   <div class="row mb-2">
                     <div class="col-12 col-md-6">
                       <label for="home_team_id"  style="font-size: 18px;" class="fw-bold">Equipo Local:</label>
@@ -74,7 +74,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-2 d-flex justify-content-center align-items-center">
+                <div class="col-12 col-md-2 d-flex justify-content-center align-items-center">
                   <button style="margin-bottom: 0 !important;" type="submit" class=" ms-5 btn bg-secondary-color primary-color secondary-button">Crear</button>
                 </div>
               </div>
@@ -86,7 +86,7 @@
                <form action="/matches/<%=t.id%>" method="post">
                 <input type="hidden" name="_method" value="DELETE">
                 <div class="row bg-primary-color rounded-2 p-2 mb-3">
-                  <div class="col-10">
+                  <div class="col-12 col-md-10">
                     <div class="row">
                       <p class="col-6 col-md-3"><b>Fecha:
                       <% if t.datetime != nil %>
@@ -125,7 +125,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-2 d-flex justify-content-center align-items-center">
+                  <div class="col-12 col-md-2 d-flex justify-content-center align-items-center">
                     <button style="margin-bottom: 0 !important;" type="" class="btn bg-secondary-color primary-color secondary-button mb-3"><a class="link-primary" href="/matches/update?match_id=<%=t.id%>">Actualizar Partido</a></button>
                     <input type="hidden" name="match_id" value=<%=t.id%>>
                     <input type="hidden" name="tournament_id" value=<%=t.match_day.tournament_id%>> 

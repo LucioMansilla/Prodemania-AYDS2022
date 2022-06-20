@@ -1,5 +1,5 @@
 <div class="row mt-5">
-  <div class="col-7 col-md-6 mx-auto">
+  <div class="col-11 col-md-6 mx-auto">
     <h3 class="text-white">Crear Torneo: </h3>
     <% if flash[:sucess]%>
       <p class="text-white"><%= flash[:sucess]%></p>
@@ -7,7 +7,7 @@
     <%if flash[:error]%>
       <p class="text-white"><%= flash[:error]%> </p>
     <%end %>
-    <div style="width: 60%;" class="p-3 mt-2 bg-primary-color rounded-2">
+    <div style="width: 60%;" class="box p-3 mt-2 bg-primary-color rounded-2">
       <form action='/tournaments' method='POST'>
         <div class="row d-flex align-items-center">
           <div class="col-9 d-flex">
@@ -26,7 +26,7 @@
     <%@tournament.each do |tournament| %>
     <form action="/tournaments/<%=tournament.id%>" method="post">
       <input type="hidden" name="_method" value="DELETE">  
-      <div style="width: 60%;" class="p-3 mt-2 bg-primary-color rounded-2 mb-3">
+      <div style="width: 60%;" class="box p-3 mt-2 bg-primary-color rounded-2 mb-3">
         <div class="row">
           <div class="col-8 d-flex justify-content-around align-items-center">
             <p style="font-size: 18px;" class="mb-0 fw-bold"><%= tournament.name%></p>

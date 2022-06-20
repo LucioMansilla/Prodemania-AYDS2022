@@ -9,20 +9,12 @@
     <form action="/matches/<%=@match.id%>" method="post">
       <input type="hidden" name="_method" value="PUT">
       <div class="row bg-primary-color rounded-2 p-2 mb-3">
-        <div class="col-10">
+        <div class="col-12 col-md-10">
           <div class="row">
-            <p class="col-6 col-md-3"><b>Fecha:
-            <% if @match.datetime != nil %>
-              </b><%= @match.datetime.strftime("%d-%m-%Y %H:%M")%>hs  
-            <% else %>
-              </b>A confirmar
-            <% end %> 
-            </p>
-            <% if @match.match_type == 'ELIMINATION' %>
-              <p class="col-6 col-md-3"><b>Tipo: </b>Eliminación</p>
-            <% else %>
-              <p class="col-6 col-md-3"><b>Tipo: </b>Liga/Grupo</p>
-            <% end %>
+            <div class="col-12 col-md-6 d-flex">
+              <label for="home_team_id"  style="font-size: 18px;" class="fw-bold">Fecha:</label>
+              <input class="form-control form-control-sm ms-2" style="width: 30%;" type="datetime" name="datetime" id="">
+            </div>
           </div>
           <div class="row align-items-center">
             <div class="col-12 col-md-3">
@@ -40,15 +32,15 @@
             </div>
             <div class="col-6 col-md-3 d-flex">
               <label for="localGoals" class=" fw-bold">Goles local:</label>
-                 <input required class="ms-1 form-control form-control-sm" style="width: 50px;" min="0" type="number" name="home_goals">
+                 <input class="ms-1 form-control form-control-sm" style="width: 50px;" min="0" type="number" name="home_goals">
             </div>
             <div class="col-6 col-md-3 d-flex">
               <label for="visitGoals" class=" fw-bold">Goles visitante:</label>
-               <input required class="ms-1 form-control form-control-sm" style="width: 50px;" min="0" type="number" name="away_goals">
+               <input class="ms-1 form-control form-control-sm" style="width: 50px;" min="0" type="number" name="away_goals">
             </div>
           </div>
         </div>
-        <div class="col-2 d-flex justify-content-center align-items-center">
+        <div class="col-12 col-md-2 d-flex justify-content-center align-items-center">
           <button style="margin-bottom: 0 !important;" type="submit" class="btn bg-secondary-color primary-color secondary-button mb-3">Actualizar Partido</button>
         </div>
       </div>

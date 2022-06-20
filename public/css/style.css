@@ -26,13 +26,6 @@ input.form-control{
   background-color: #f2f2f2 !important;
 }
 
-
-#submit-button:hover {
-  background-color: #adb4b1 !important;
-  border-color: #cce1d9;
-}
-
-/**
 #submit-button:hover {
   background-color: #49be91 !important;
   border-color: #49be91;
@@ -42,16 +35,6 @@ input.form-control{
   background-color: #242424 !important;
   border-color: #242424;
   color: #3aa17a;
-}
-
-*/
-.secondary-button:hover {
-  background-color: #242424 !important;
-  border-color: #242424;
- 
-  /** add animation, smooth when hover */
-
-  color: #ffffff;
 }
 
 #header {
@@ -93,4 +76,10 @@ input.form-control{
 
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
   color: white !important;
+}
+
+@media (max-width: 768px) {
+  .box {
+    width: 100% !important;
+  }
 }
