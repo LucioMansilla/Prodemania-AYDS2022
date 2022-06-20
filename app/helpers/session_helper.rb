@@ -41,4 +41,9 @@ module SessionHelper
         end
     end
 
+    def profile 
+        @player = Player.find_by_id(session[:player_id])
+        erb :"players/profile", :layout => :layout_2
+    end
+
 end
