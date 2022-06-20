@@ -63,7 +63,7 @@ class App < Sinatra::Application
      before do
       if session[:player_id]
         @current_player = Player.find_by(id: session[:player_id])
-       admin_pages = ["/teams","/tournaments","/matches/new", "/matches/update" ,"/match_day_create","/add_tournament","/gestion","/add_team"]
+       admin_pages = ["/teams","/tournaments", "/matches","/match_day_create","/add_tournament","/gestion","/add_team"]
        if(admin_pages.include?(request.path_info))
          if(@current_player.is_admin != true)
            redirect '/inicio'
@@ -113,11 +113,9 @@ class App < Sinatra::Application
     points
   end
 
-  get '/matches/new' do
-    new_match
-  end
+  ## MATCHES ROUTES ##
 
-  get '/matches/update' do
+  get '/matches' do
     matches
   end
 
@@ -128,6 +126,12 @@ class App < Sinatra::Application
   put '/matches/:match_id' do
     update_match
   end
+
+  delete '/matches/:match_id' do
+    delete_match
+  end
+
+  ## END MATCHES ROUTES ##
 
   post '/forecasts' do
     post_forecast
@@ -141,8 +145,9 @@ class App < Sinatra::Application
     post_match_day
   end 
 
-
-
+  delete '/match_days/:match_day_id' do
+    delete_match_day
+  end
 
   ## -- Tournament Controller -- ##
   get '/match_days' do 
@@ -161,6 +166,11 @@ get '/teams/new' do
  new_team
 end
 
+
+delete '/teams/:team_id' do
+  delete_team
+end
+
 ## -- Tournament for Admin -- #
 
 get '/tournaments' do
@@ -175,6 +185,14 @@ end
 delete '/tournaments/:id' do 
 delete_tournament (params['id'])
 end
+
+
+## -- PROFILE -- ##
+get '/profile' do
+  @current_player = Player.find_by(id: session[:player_id])
+  profile 
+end
+
 
 ## ----------------------------- ##
 
