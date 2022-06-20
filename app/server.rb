@@ -170,6 +170,14 @@ get '/teams/new' do
  new_team
 end
 
+put '/teams/:id' do
+  update_team_tournament
+end
+
+get '/teams/update' do
+  update_team
+end
+
 
 delete '/teams/:team_id' do
   delete_team

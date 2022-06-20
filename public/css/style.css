@@ -66,6 +66,15 @@ input.form-control{
   color: #49be91 !important;
 }
 
+.link-secondary {
+  color: #242424 !important;
+  text-decoration: none !important;
+}
+
+.link-secondary:hover {
+  color: #242424 !important;
+}
+
 .anton {
   font-family: 'Anton', sans-serif;
 } 

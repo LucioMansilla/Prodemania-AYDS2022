@@ -25,10 +25,10 @@ module TeamHelper
         end
 
         redirect '/teams/new'   
-      end   
+     end   
 
 
-      def delete_team
+    def delete_team
         team = Team.find(params['team_id'])
         if (team.destroy)
             flash[:success] = "El equipo fue eliminado con éxito"
@@ -36,9 +36,30 @@ module TeamHelper
             flash[:error] = "El equipo no pudo ser eliminado"
             end
         redirect '/teams/new'
+    end
+
+    def update_team_tournament
+        team = Team.find_by_id(params['id'])
+        tournament = Tournament.all.where(name:params['tournament_names'])
+        team.tournaments << tournament
+        
+        if(team.save)
+            flash[:success] = "El equipo fue actualizado con éxito."   
+        else
+            flash[:success] = "El equipo no pudo ser actualizado."   
         end
 
+        redirect '/teams/new' 
+    end
 
+    def update_team
+        tournaments = Tournament.all 
+        @team = Team.find_by_id(params['team_id'])
+        @tournaments_to_choice = tournaments.select {|t| !@team.tournaments.include?(t)}
+        erb :'admin/update_team', :layout => :layout_2
+    end
+
+    
 end 
 
 
