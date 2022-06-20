@@ -119,6 +119,10 @@ class App < Sinatra::Application
     matches
   end
 
+  get '/matches/update' do
+    update_result
+  end
+
   post '/matches' do
     create_match
   end

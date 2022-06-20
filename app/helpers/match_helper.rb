@@ -23,12 +23,17 @@ module MatchHelperModule
     match.home_goals = params['home_goals']
     match.away_goals = params['away_goals']
 
+    if(!match.consistentResult)
+      flash[:error] = "Error. El resultado no es consistente"
+      redirect 'matches/update?match_id=' + params[:match_id]
+    end
+
     if(match.save)
       flash[:success] = "Partido actualizado con exito."
     else
       flash[:error] = "Error al actualizar partido. Intente nuevamente."
     end
-    redirect '/matches'
+    redirect 'matches/update?match_id=' + params[:match_id]
 
   end
 
@@ -60,6 +65,11 @@ module MatchHelperModule
     end
     redirect '/matches'
 
+  end
+
+  def update_result
+    @match = Match.find_by_id [params['match_id']]
+    erb :'/admin/update_match', :layout => :layout_2
   end
 
 end
