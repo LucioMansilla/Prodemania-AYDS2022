@@ -2,9 +2,14 @@
 
 </div>
 <div class="container-fluid bg-secondary-color h-300 mt-5">
+
   <div class="row h-300">
     <div class="col-12 d-flex flex-column justify-content-center align-items-center">
-     
+       <% if flash[:error] %>
+      <p class="text-white"><%=flash[:error]%></p>
+    <% else %>
+      <p class="text-white"><%=flash[:success]%></p>
+    <% end %>
       <div class="p-3 w-30 mx-auto bg-white rounded-4">
         <h3 class="mb-3 mx-4">Editar Perfil</h3>
         <form action="/edit" method="post">

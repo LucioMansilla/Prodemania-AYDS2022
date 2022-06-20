@@ -46,4 +46,23 @@ module SessionHelper
         erb :"players/profile", :layout => :layout_2
     end
 
+    def update_player 
+        current_player = Player.find_by_id(session[:player_id])
+        if !Player.exists?(name: params[:name])
+          current_player.name = params[:name]
+        else
+          flash[:error] = "Ya existe un usuario con ese nombre"
+          redirect '/profile'
+        end
+    
+        if params[:password] == params[:password_confirmation]
+           current_player.password = params[:password]
+           current_player.save
+          flash[:success] = "Cambios guardados con éxito!"
+          redirect '/profile'
+        else
+          flash[:error] = "Las contraseñas no coinciden"
+          redirect '/profile'
+        end
+      end
 end

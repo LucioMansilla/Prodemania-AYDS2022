@@ -205,6 +205,10 @@ get '/profile' do
   profile 
 end
 
+put '/edit' do
+  update_player
+end
+
 
 ## ----------------------------- ##
 
