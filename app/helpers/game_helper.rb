@@ -1,6 +1,8 @@
 module GameHelperModule
 
   def home
+    #load session user
+    @user = Player.find_by_id(session[:user_id])
     erb :'home', :layout => :layout_2
   end
 
@@ -30,5 +32,6 @@ module GameHelperModule
 
     erb :"points/points"
   end
+
 
 end

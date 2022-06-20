@@ -3,7 +3,8 @@ module MatchDayHelper
 
   def new_match_days
     @tournaments = Tournament.all
-    erb :"admin/new_match_days"
+    @match_days = MatchDay.all
+    erb :"admin/new_match_days", :layout => :layout_2
   end
   
   def post_match_day
@@ -25,6 +26,17 @@ module MatchDayHelper
     end
     #@tournaments = Tournament.all
     #erb :"admin/match_days"
+    redirect '/match_days/new'
+  end
+
+
+  def delete_match_day
+    match_day = MatchDay.find(params['match_day_id'])
+    if (match_day.destroy)
+      flash[:success] = "Match day deleted"
+    else
+      flash[:error] = "Match day not deleted"
+    end
     redirect '/match_days/new'
   end
 end
