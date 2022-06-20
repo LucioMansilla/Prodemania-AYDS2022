@@ -86,3 +86,11 @@ input.form-control{
 .anton {
   font-family: 'Anton', sans-serif;
 } 
+
+.table-body:hover {
+  color: white !important;
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  color: white !important;
+}
