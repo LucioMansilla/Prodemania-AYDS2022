@@ -63,7 +63,7 @@ class App < Sinatra::Application
      before do
       if session[:player_id]
         @current_player = Player.find_by(id: session[:player_id])
-       admin_pages = ["/teams","/tournaments", "/matches","/match_day_create","/add_tournament","/gestion","/add_team"]
+       admin_pages = ["/teams","/tournaments", "/matches","/match_day_create","/add_tournament","/gestion","/add_team","/tournaments/update"]
        if(admin_pages.include?(request.path_info))
          if(@current_player.is_admin != true)
            redirect '/inicio'
@@ -198,6 +198,13 @@ delete '/tournaments/:id' do
 delete_tournament (params['id'])
 end
 
+put '/tournaments' do
+  update_tournament
+end
+
+get '/tournaments/update/:id' do
+update_t
+end
 
 ## -- PROFILE -- ##
 get '/profile' do
