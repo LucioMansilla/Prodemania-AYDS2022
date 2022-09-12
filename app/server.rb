@@ -198,6 +198,12 @@ delete '/tournaments/:id' do
 delete_tournament (params['id'])
 end
 
+## Forecasts ##
+
+get '/forecasts' do 
+  get_forecasts
+end
+
 
 ## -- PROFILE -- ##
 get '/profile' do

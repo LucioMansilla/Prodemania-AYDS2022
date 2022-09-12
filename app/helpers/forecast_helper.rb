@@ -15,9 +15,13 @@ module ForecastHelper
         else
             flash[:error] = "Error. El resultado no es consistente."
         end
-        logger.info(params)
         redirect '/play?id_match_day=' + forecast.match.match_day_id.to_s + '&id_tournament=' + forecast.match.match_day.tournament_id.to_s
 
+    end
+
+    def get_forecasts
+        @forecasts = Forecast.where(player_id: params['player_id'])
+        erb :"forecasts/forecasts", :layout => :layout_2
     end
 
     # def update_forecast
