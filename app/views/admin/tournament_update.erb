@@ -1,0 +1,46 @@
+<div class="row mt-5">
+
+  <div class="col-11 col-md-6 mx-auto">
+    
+    <h3 class="text-white">Actualizar Torneo: </h3>
+    
+    <% if flash[:sucess]%>
+      <p class="text-white"><%= flash[:sucess]%></p>
+    <%end %>
+
+    <%if flash[:error]%>
+      <p class="text-white"><%= flash[:error]%> </p>
+    <%end %>
+
+    <div style="width: 70%;" class="box p-3 mt-2 bg-primary-color rounded-2">
+      
+      <form action='/tournaments' method='post'>
+       <input type="hidden" name="_method" value="PUT"> 
+       <input type="hidden" name="id" value="<%=@id%>">
+
+        <div class="row d-flex align-items-center">
+
+          <div class="col-9 d-flex">
+            
+            <label style="font-size: 18px  width: 100%;" class="me-2 fw-bold" for="name"> Nuevo nombre: </label>
+            
+            <input class="form-control form-control-sm" id='name' name='name' type='text' placeholder=''/>
+          
+          </div>
+
+          <div class="col-2">
+            <button style="margin-bottom: 0 !important;" type="submit" class="btn bg-secondary-color primary-color secondary-button">Actualizar</button>
+          </div>
+
+        </div>
+        
+    
+      </form> 
+
+    </div>
+
+    
+
+  </div>
+
+</div>
