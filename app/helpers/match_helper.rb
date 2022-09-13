@@ -1,19 +1,40 @@
 module MatchHelperModule
 
   def create_match
+
     match = Match.new
     match.datetime = params['datetime']
     match.match_type = params['match_type']
-    match.match_day_id = params['match_day_id']
+    match.match_day_id = params['match_day_id'] 
     match.home_id = params['home_id']
     match.away_id = params['away_id']
 
-    if(match.save)
-      flash[:success] = "Partido creado con exito."
-    else
-      flash[:error] = "Error al crear partido. Intente nuevamente."
+    id_match_day =  params['match_day_id']
+  
+    matches = Match.where(match_day_id:id_match_day)
+  
+    home= (params['home_id']).to_i
+    away = (params['away_id']).to_i
+
+    for m in matches do    
+      if check_team(home,m.home_id,m.away_id) || check_team(away,m.home_id,m.away_id)
+          check = true
+      end
     end
+
+    if(check)
+      flash[:error] = "Error al crear partido. Intente nuevamente."
+    else
+      match.save
+      flash[:success] = "Partido creado con exito."
+    end
+
     redirect '/matches'
+
+  end
+
+  def check_team (id_team,home,away) 
+    id_team == home || id_team == away
   end
 
   def update_match
