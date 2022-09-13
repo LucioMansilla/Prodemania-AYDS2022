@@ -3,10 +3,12 @@
 module ForecastHelper
 
     def post_forecast
+        
         forecast = Forecast.check_match_player(session[:player_id], params[:match_id])
         forecast.result = params['result']
         forecast.home_goals = params['home_goals']
         forecast.away_goals = params['away_goals']
+        
         if(forecast.consistentResult) then            
             forecast.tournament_id = params['tournament_id']
             logger.info(forecast)
