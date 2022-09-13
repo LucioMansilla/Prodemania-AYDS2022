@@ -1,6 +1,6 @@
 require_relative '../app/models/init'
 
-=begin  #Task: Test-register-user
+=begin  #Task: 183187326-
     Si se intenta registrar un usuario ya existente - retornar el error correspondiente y hacer un rollback de la operación.
 
     Si se intenta registrar un usuario con nombres inválidos - retornar el error correspondiente y hacer un rollback de la operación.
