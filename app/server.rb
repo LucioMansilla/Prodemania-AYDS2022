@@ -205,6 +205,12 @@ end
 get '/tournaments/update/:id' do
 update_t
 end
+## Forecasts ##
+
+get '/forecasts' do 
+  get_forecasts
+end
+
 
 ## -- PROFILE -- ##
 get '/profile' do
