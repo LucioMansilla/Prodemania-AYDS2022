@@ -24,10 +24,11 @@
 
               <h3 class="text-white">Partidos:</h3>
 
-              <% if flash[:error] %>
-                <p class="text-white"><%=flash[:error]%></p>
-              <% else %>
-                <p class="text-white"><%=flash[:success]%></p>
+               <% if flash[:error] %>
+                <p class="text-black alert alert-danger"><%=flash[:error]%></p>
+              <% end %>
+              <% if flash[:success] %>
+                <p class="text-black alert alert-success"><%=flash[:success]%></p>
               <% end %>
 
               <% @matches.each do |t|%>

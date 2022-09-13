@@ -1,12 +1,12 @@
 <div class="row mt-5">
   <div class="col-11 col-md-6 mx-auto">
     <h3 class="text-white">Crear Torneo: </h3>
-    <% if flash[:sucess]%>
-      <p class="text-white"><%= flash[:sucess]%></p>
-    <%end %>
-    <%if flash[:error]%>
-      <p class="text-white"><%= flash[:error]%> </p>
-    <%end %>
+     <% if flash[:error] %>
+      <p class="text-white alert alert-danger"><%=flash[:error]%></p>
+  <% end %>
+    <% if flash[:success] %>
+      <p class="text-white alert alert-success"><%=flash[:success]%></p>
+    <% end %>
     <div style="width: 60%;" class="box p-3 mt-2 bg-primary-color rounded-2">
       <form action='/tournaments' method='POST'>
         <div class="row d-flex align-items-center">
