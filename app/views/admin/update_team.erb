@@ -1,12 +1,12 @@
 <div class="row mt-5">
   <div class="col-11 col-md-7 mx-auto">
     <h3 class="text-white">Actualizar Equipo: </h3>
-    <% if flash[:success]%>
-      <p class="text-white"><%= flash[:success]%></p>
-    <%end %>
-    <%if flash[:error]%>
-      <p class="text-white"><%= flash[:error]%> </p>
-    <%end %>
+     <% if flash[:error] %>
+                <p class="text-black alert alert-danger"><%=flash[:error]%></p>
+              <% end %>
+              <% if flash[:success] %>
+                <p class="text-black alert alert-success"><%=flash[:success]%></p>
+              <% end %>
     <div style="width: 60%;" class="box p-3 mt-2 bg-primary-color rounded-2">
       <form action='/teams/<%=@team.id%>' method='POST'>
       <input type="hidden" name="_method" value="PUT">

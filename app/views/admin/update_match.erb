@@ -1,10 +1,11 @@
 <div class="row mt-5">
   <div class="col-12 col-md-10 mx-auto">
-    <% if flash[:error] %>
-      <p class="text-white"><%=flash[:error]%></p>
-    <% else %>
-      <p class="text-white"><%=flash[:success]%></p>
-    <% end %>
+     <% if flash[:error] %>
+                <p class="text-black alert alert-danger"><%=flash[:error]%></p>
+              <% end %>
+              <% if  flash[:success] %>
+                <p class="text-black alert alert-success"><%=flash[:success]%></p>
+              <% end %>
     <h3 class="text-white">Actualizar partido: </h3>
     <form action="/matches/<%=@match.id%>" method="post">
       <input type="hidden" name="_method" value="PUT">
