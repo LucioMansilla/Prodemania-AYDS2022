@@ -7,7 +7,7 @@
         <div class="p-3 w-30 mx-auto bg-white rounded-4">
           <h3 class="mb-3 mx-4">Iniciar Sesión</h3>
           <% if flash[:success]%>
-            <p class="text-success mx-4"><%= flash[:success]%></p>
+            <p class="text-success mx-4 alert alert-success"><%= flash[:success]%></p>
           <%end %>  
           <form action="/login" method="post">
             <div class="form-floating mb-3 mx-4">

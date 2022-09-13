@@ -1,9 +1,10 @@
 <div class="row mt-5">
   <div class="col-12 col-md-10 mx-auto">
     <% if flash[:error] %>
-                <p class="text-white"><%=flash[:error]%></p>
-              <% else %>
-                <p class="text-white"><%=flash[:success]%></p>
+                <p class="text-white alert alert-danger"><%=flash[:error]%></p>
+              <% end %>
+              <% if flash[:success] %>
+                <p class="text-white alert alert-success"><%=flash[:success]%></p>
               <% end %>
     <%if !@tournaments.empty?%>
       <h3 class="text-white" >Selecciona el torneo para el cual quieres realizar la prediccion:</h3>
@@ -151,18 +152,18 @@
               </form>
               <% end %>
             <%else%>
-              <p class="text-white">No hay partidos para la instancia seleccionada.</p>
+              <p class="text-white class="alert alert-danger">No hay partidos para la instancia seleccionada.</p>
             <%end%>
           <%end%>
           
 
         <%else%>
-          <p class="text-white">No hay instancias disponibles correspondientes al toreno seleccionado.</p>
+          <p class="text-white class="alert alert-danger">No hay instancias disponibles correspondientes al toreno seleccionado.</p>
         <%end%>
       <%end%>
 
     <%else%>
-      <p class="text-white">No hay torneos disponibles para jugar.</p>
+      <p class="text-white class="alert alert-danger">No hay torneos disponibles para jugar.</p>
     <%end%>
   </div>
 </div>
