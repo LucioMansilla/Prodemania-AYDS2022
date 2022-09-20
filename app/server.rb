@@ -2,9 +2,12 @@ require 'sinatra/base'
 require 'bundler/setup'
 require 'sinatra/reloader' if Sinatra::Base.environment == :development
 require 'logger'
+require 'wicked_pdf'
 require "sinatra/activerecord"
 require_relative './models/init'
 require 'sinatra/flash'
+require 'prawn'
+require 'prawn/table'
 
 require_relative './helpers/game_helper'
 require_relative './helpers/match_helper'
@@ -77,6 +80,56 @@ class App < Sinatra::Application
       end
     end
     ## -- Session -- ##
+
+    get '/pdf_table/' do
+      content_type 'application/pdf'
+      
+      #points = params['prueba']
+      #logger.info(points.first)
+      id_tournament = params['name_tournament']
+      points = Point.where(tournament_id:id_tournament).order(total_points: :desc)
+      
+      name = Tournament.find_by(id: id_tournament).name
+
+      pdf = Prawn::Document.new
+      content = "Puntaje "+name
+      #pdf html content
+      pdf.font "Times-Roman"
+    
+      pdf.draw_text content, :at => [150,720], :size => 30, :color => "red"
+      #pdf.text "Hello World"
+      pdf.move_down 20
+
+      lista = [["#","Nombre","Puntos"]]
+
+      i = 1
+      for p in points do 
+        player = p.player[:name].to_s
+        point = p[:total_points].to_s
+        lista.push([i.to_s,player, point])
+        i = i+1
+      end
+
+      #tablem = Prawn::Table.new
+      col =  ["#","Nombre","Puntos"]
+     
+      pdf.table(
+        lista, :width => 500, :cell_style => {
+          :font_style => :bold, :background_color => '808080', :border_color => '3aa17a',
+          :color => '3aa17a'
+        } )
+
+        #pdf.table(lista) do        
+          #row(0).style(:background_color => 'ff00ff',:color => '3aa17a')
+        #end
+
+      #pdf.table([ ["short", "short", "loooooooooooooooooooong"],
+      #["short", "loooooooooooooooooooong", "short"],
+      #["loooooooooooooooooooong", "short", "short"] ])
+
+      pdf.render
+    
+    end
 
 
   ##--- Player Controller ---##
