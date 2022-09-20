@@ -3,9 +3,15 @@
     <h3 class="text-white">Estadísticas</h3>
 
     <% if @tournament_selected %>
-      <p class="text-white">Éxitos: <%= @successes%></p>
-      <p class="text-white">Éxitos Parciales: <%= @partial_successes%></p>
-      <p class="text-white">Fallos: <%= @fails%></p>
+      
+      <% if @total_points == 0 %>
+        <p class="text-white">No se han jugado partidos.</p>  
+      <% else %>
+        <p class="text-white">Éxitos: <%= @successes%></p>
+        <p class="text-white">Éxitos Parciales: <%= @partial_successes%></p>
+        <p class="text-white">Fallos: <%= @fails%></p>
+        <p class="text-white">Efectividad: <%= @efectivity%></p>
+      <% end %>
     <% else %>
       <button onclick="location.assign('/statistics?tournament=all&player_id=<%=@current_player.id%>')" id="submit-button" class="btn bg-primary-color mt-2">Ver totales</button>
       <h4 class="text-white mt-3" >Selecciona el torneo para el cual quieres consultar tus estadísticas:</h4>
