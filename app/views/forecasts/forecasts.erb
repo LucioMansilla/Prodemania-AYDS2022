@@ -1,8 +1,11 @@
 <div class="row mt-3">
   <div class="col-12 col-md-10 mx-auto">
-    <h3 class="text-white">Mis Predicciones</h3>
+  <div class="d-flex">
+    <h3 class="text-white me-3">Mis Predicciones</h3>
+    <button id="submit-button" class="btn bg-primary-color">Mis Estadísticas</button>
+  </div>
     <%if !@forecasts.empty?%>
-      <table style="border-color: #3aa17a;" class="text-white table table-bordered table-hover">
+      <table style="border-color: #3aa17a;" class="text-white table table-bordered table-hover mt-4">
         <thead>
           <tr>
             <th scope="col">Torneo</th>
