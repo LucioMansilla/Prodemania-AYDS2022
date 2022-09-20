@@ -81,12 +81,12 @@ class App < Sinatra::Application
     end
     ## -- Session -- ##
 
-    get '/pdf_table/' do
+    get '/export-pdf' do
       content_type 'application/pdf'
       
       #points = params['prueba']
       #logger.info(points.first)
-      id_tournament = params['name_tournament']
+      id_tournament = params['id_tournament']
       points = Point.where(tournament_id:id_tournament).order(total_points: :desc)
       
       name = Tournament.find_by(id: id_tournament).name

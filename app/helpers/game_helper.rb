@@ -26,10 +26,9 @@ module GameHelperModule
     @tournaments = Tournament.all 
 
     if(params['id_tournament'])
-      @name_tournament = params['id_tournament']
+      @id_tournament = params['id_tournament']
       @torneo_selected = true
       @points = Point.where(tournament_id: params['id_tournament']).order(total_points: :desc)
-      @prueba = Point.where(tournament_id: params['id_tournament']).order(total_points: :desc)
     end
 
     erb :"points/points", :layout => :layout_2
