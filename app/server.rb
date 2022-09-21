@@ -18,6 +18,7 @@ require_relative './helpers/match_day_helper'
 require_relative './helpers/team_helper'
 require_relative './helpers/tournament_helper'
 require_relative './helpers/session_helper'
+require_relative './helpers/export_pdf_helper'
 
 class App < Sinatra::Application
 
@@ -30,6 +31,7 @@ class App < Sinatra::Application
   helpers TeamHelper
   helpers TournamentHelper
   helpers SessionHelper
+  helpers ExportPdfHelper
 
   configure :production, :development do
     enable :logging
@@ -82,53 +84,8 @@ class App < Sinatra::Application
     ## -- Session -- ##
 
     get '/export-pdf' do
-      content_type 'application/pdf'
-      
-      #points = params['prueba']
-      #logger.info(points.first)
-      id_tournament = params['id_tournament']
-      points = Point.where(tournament_id:id_tournament).order(total_points: :desc)
-      
-      name = Tournament.find_by(id: id_tournament).name
-
-      pdf = Prawn::Document.new
-      content = "Puntaje "+name
-      #pdf html content
-      pdf.font "Times-Roman"
-    
-      pdf.draw_text content, :at => [150,720], :size => 30, :color => "red"
-      #pdf.text "Hello World"
-      pdf.move_down 20
-
-      lista = [["#","Nombre","Puntos"]]
-
-      i = 1
-      for p in points do 
-        player = p.player[:name].to_s
-        point = p[:total_points].to_s
-        lista.push([i.to_s,player, point])
-        i = i+1
-      end
-
-      #tablem = Prawn::Table.new
-      col =  ["#","Nombre","Puntos"]
-     
-      pdf.table(
-        lista, :width => 500, :cell_style => {
-          :font_style => :bold, :background_color => '808080', :border_color => '3aa17a',
-          :color => '3aa17a'
-        } )
-
-        #pdf.table(lista) do        
-          #row(0).style(:background_color => 'ff00ff',:color => '3aa17a')
-        #end
-
-      #pdf.table([ ["short", "short", "loooooooooooooooooooong"],
-      #["short", "loooooooooooooooooooong", "short"],
-      #["loooooooooooooooooooong", "short", "short"] ])
-
-      pdf.render
-    
+      data = points_table_data(params['id_tournament'])
+      create_pdf(data)
     end
 
 
