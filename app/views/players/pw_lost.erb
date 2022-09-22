@@ -1,0 +1,31 @@
+<div class="container-fluid bg-secondary-color h-100">
+    <div class="row h-50">
+      <div class=" mt-5 col-12 d-flex flex-column justify-content-center align-items-center">
+   <div class="mt-5">
+          <img src="/images/logo.png" class="img-fluid" alt="logo">
+        </div>
+      <%# Form for a pw lost, please enter a valid email/username for recovery password %>
+      <div class="p-3 w-30 mx-auto bg-white rounded-4">
+        <h3 class="mb-3 mx-4">Ingrese un e-mail o usuario válido</h3>
+        <% if flash[:success]%>
+          <p class="text-success mx-4 alert alert-success"><%= flash[:success]%></p>
+        <%end %>  
+        <form action="/pw-lost" method="post">
+          <div class="form-floating mb-3 mx-4">
+            <input type="text" name="email" class="form-control" id="floatingInput" placeholder="Nombre">
+            <label for="floatingInput">Email/Username</label>
+          </div>
+          <div class="mx-4">
+            <button id="submit-button" type="submit" class="btn bg-primary-color mb-0"> Solicitar contraseña </button>
+            <% if flash[:error]%>
+              <p class="text-danger"><%= flash[:error]%></p>
+            <%end %>
+          </div>
+        </form>
+      </div>
+    
+      </div>
+    </div>
+    
+  </div>
+  

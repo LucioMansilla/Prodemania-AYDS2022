@@ -1,7 +1,19 @@
+require 'mail'
 module SessionHelper
+  Mail.defaults do
+    delivery_method :smtp, { 
+      :address => 'smtp.gmail.com',
+      :port => 587,
+      :user_name => 'prodemania@gmail.com',
+      :password => ENV['SECRET_APP_CODE'],
+      :authentication => :plain,
+      :enable_starttls_auto => true
+    }
+  end
 
     def new_singup
         erb :"players/signup"
+        #and then docker-compose up 
     end
 
     def new_authentication
@@ -21,6 +33,8 @@ module SessionHelper
           redirect '/signup'
         else
           flash[:success] = "Usuario registrado con éxito!"
+          mailUser = player.email
+          register_email_successfull(mailUser, player.name)
           redirect '/login'
         end  
     end
@@ -65,4 +79,46 @@ module SessionHelper
           redirect '/profile'
         end
       end
+
+      def pw_lost
+        erb :"players/pw_lost", :layout => :layout
+      end
+
+      def pw_lost_post
+        player = Player.find_by_email(params[:email])
+        if player
+          logger.info(generateRandomPassword)
+        end
+      end
+
+
+      def register_email_successfull(mailUser,userName)
+          template = File.read("app/views/players/emailer.erb")
+          mail = Mail.new do |m|
+            m.from    'prodemania@gmail.com'
+            m.to       mailUser
+            m.subject 'Bienvenido a PRODE'
+            m.html_part = template.gsub("{{name}}", userName)
+          end
+          mail.deliver
+      end 
+      
+      def generateRandomPassword
+        o = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
+        string = (0...8).map { o[rand(o.length)] }.join
+        return string
+      end
+
+      
+      
+      def email_update_successfull(mailUser,userName)
+        template = File.read("app/views/players/password_update.erb")
+        mail = Mail.new do |m|
+          m.from    'prodemania@gmail.com'
+          m.to      mailUser
+          m.subject 'Actualización de contraseña'
+          m.html_part = template.gsub("{{name}}", userName)
+        end
+      end
+
 end

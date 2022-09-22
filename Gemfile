@@ -19,3 +19,6 @@ end
 
 gem 'bcrypt'
 gem 'sinatra-flash'
+
+gem 'mail'
+gem 'prawn'
