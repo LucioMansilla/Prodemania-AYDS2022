@@ -5,14 +5,14 @@
           <img src="/images/logo.png" class="img-fluid" alt="logo">
         </div>
       <%# Form for a pw lost, please enter a valid email/username for recovery password %>
-      <div class="p-3 w-30 mx-auto bg-white rounded-4">
-        <h3 class="mb-3 mx-4">Ingrese un e-mail o usuario válido</h3>
+      <div id="todo" class="p-3 w-30 mx-auto bg-white rounded-4">
+        <h3 class="mb-3 mx-4">Ingrese un e-mail válido</h3>
         <% if flash[:success]%>
           <p class="text-success mx-4 alert alert-success"><%= flash[:success]%></p>
         <%end %>  
         <form action="/pw-lost" method="post">
           <div class="form-floating mb-3 mx-4">
-            <input type="text" name="email" class="form-control" id="floatingInput" placeholder="Nombre">
+            <input id="mail" type="text" name="email" class="form-control" id="floatingInput" placeholder="Nombre">
             <label for="floatingInput">Email/Username</label>
           </div>
           <div class="mx-4">
@@ -21,11 +21,56 @@
               <p class="text-danger"><%= flash[:error]%></p>
             <%end %>
           </div>
+
+          
+          
+
         </form>
-      </div>
+
+        <script>
+  
+      
+      const submitButton = document.getElementById("submit-button");
+      
+      const mail = document.getElementById("mail");
+      const todo = document.getElementById("todo");
+
+      const mailFake = mail.value;
+      const mailSplitothemiddle = mailFake.split("@");
+      const mailSplitafter3 = mailSplitothemiddle[0].slice(0,5);
+
+      submitButton.addEventListener("click", function(){
     
+        todo.classList.remove("bg-white");
+
+        todo.innerHTML = "<p class='text-success mx-4 alert alert-success'>Por favor revise su correo electrónico: " + mailSplitafter3 + "@****.com para un enlace de recuperación de contraseña</p>";
+
+        const carde = document.getElementById("carde");
+        carde.remove();
+      });
+        </script>
       </div>
+
+        <div id="carde" class="card text-black bg-white mb-3 mx-4 mt-3">
+            <div class="card-body">
+              <h5 class="card-title text-center">Importante!.</h5>
+              <p class="card-text ">Se enviará a su<strong> e-mail</strong> la contraseña temporal</p>
+            </div>
+            </div>
+        
+      </div>
+
+        
+      </div>
+       
+
     </div>
+
+   
     
+
+
+
+
   </div>
   
