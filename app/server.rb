@@ -58,51 +58,12 @@ class App < Sinatra::Application
     super()
   end
 
-  
-  
-  get '/email' do
-    Mail.defaults do
-      delivery_method :smtp, { 
-        :address => 'smtp.gmail.com',
-        :port => 587,
-        :user_name => 'luciomansillaztw@gmail.com',
-        :password => 'bynpbfwubzecwewj',
-        :authentication => :plain,
-        :enable_starttls_auto => true
-      }
-
-
-    end
-    
-    mail = Mail.new do |m|
-      m.from    'luciomansillaztw@gmail.com'
-      m.to      'lybCompany416@gmail.com'
-      m.subject 'test ruby'
-      m.html_part = '<b>This is HTML message.</b> <h1>This is headline.</h1>'
-
-    end
-    
-    
-    mail.deliver
-  end
-
-  get '/report/' do
-    content_type 'application/pdf'
-  
-    pdf = Prawn::Document.new
-    #pdf html content
-    pdf.text "Hello World"
-    pdf.render
-  
-  end
-
-  get '/env-var-test' do
-    logger.info(ENV['SECRET_APP_CODE'])
-
-  end
 
   get '/gestion' do
     get_menu_admin
+  end
+  get '/pw-recovery/:token' do
+    return "chau"
   end
 
      ## -- Session -- ##
@@ -116,6 +77,9 @@ class App < Sinatra::Application
          end
        end
       else
+        if(request.path_info.match(/\/pw-recovery\/.*/))
+          return
+        end
         public_pages = ["/login", "/signup", "/pw-lost"]
         if !public_pages.include?(request.path_info)
           redirect '/login'
@@ -163,8 +127,11 @@ class App < Sinatra::Application
     pw_lost
   end
 
+  get '/pw-recovery/:token' do
+    pw_lost_token
+  end
+
   post '/pw-lost' do
-    logger.info("haaa")
     pw_lost_post
   end
 
