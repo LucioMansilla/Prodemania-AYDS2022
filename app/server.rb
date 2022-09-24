@@ -11,7 +11,7 @@ require_relative './helpers/match_helper'
 require_relative './helpers/forecast_helper'
 require_relative './helpers/admin_helper'
 require_relative './helpers/match_day_helper'
-
+require_relative './helpers/statistics_helper'
 require_relative './helpers/team_helper'
 require_relative './helpers/tournament_helper'
 require_relative './helpers/session_helper'
@@ -23,7 +23,7 @@ class App < Sinatra::Application
   helpers ForecastHelper
   helpers AdminHelper
   helpers MatchDayHelper
-
+  helpers StatisticsHelper
   helpers TeamHelper
   helpers TournamentHelper
   helpers SessionHelper
@@ -150,7 +150,7 @@ class App < Sinatra::Application
   end 
 
   delete '/match_days/:match_day_id' do
-    delete_match_day
+    delete_match_dayMatchDayHelper
   end
 
   ## -- Tournament Controller -- ##
@@ -222,6 +222,10 @@ put '/edit' do
   update_player
 end
 
+## -- Statistisc -- ##
+get '/statistics' do
+  get_statistics
+end
 
 ## ----------------------------- ##
 
