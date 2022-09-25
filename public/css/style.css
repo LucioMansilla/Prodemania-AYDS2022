@@ -31,10 +31,25 @@ input.form-control{
   border-color: #49be91;
 }
 
+#submit-b:hover {
+  background-color: #49be91;
+  border-color: #49be91;
+}
+
 .secondary-button:hover {
   background-color: #242424 !important;
   border-color: #242424;
   color: #3aa17a;
+}
+
+.s-button:hover {
+  background-color: #3aa17a !important;
+  border-color: #3aa17a;
+  color: #242424;
+}
+
+.bg-s-color {
+  background-color: #3aa17a 
 }
 
 #header {
