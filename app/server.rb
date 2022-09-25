@@ -68,7 +68,7 @@ class App < Sinatra::Application
      before do
       if session[:player_id]
         @current_player = Player.find_by(id: session[:player_id])
-       admin_pages = ["/teams","/tournaments", "/matches","/match_day_create","/add_tournament","/gestion","/add_team","/tournaments/update"]
+       admin_pages = ["/teams","/tournaments", "/matches","/match_day_create","/add_tournament","/gestion","/add_team","/tournaments/update","/export_pdf"]
        if(admin_pages.include?(request.path_info))
          if(@current_player.is_admin != true)
            redirect '/inicio'
@@ -83,7 +83,7 @@ class App < Sinatra::Application
     end
     ## -- Session -- ##
 
-    get '/export-pdf' do
+    get '/export_pdf' do
       data = points_table_data(params['id_tournament'])
       create_pdf(data)
     end
