@@ -62,9 +62,7 @@ class App < Sinatra::Application
   get '/gestion' do
     get_menu_admin
   end
-  get '/pw-recovery/:token' do
-    return "chau"
-  end
+
 
      ## -- Session -- ##
      before do
@@ -80,7 +78,7 @@ class App < Sinatra::Application
         if(request.path_info.match(/\/pw-recovery\/.*/))
           return
         end
-        public_pages = ["/login", "/signup", "/pw-lost"]
+        public_pages = ["/login", "/signup", "/pw-lost","/pw-new"]
         if !public_pages.include?(request.path_info)
           redirect '/login'
         end
@@ -128,12 +126,18 @@ class App < Sinatra::Application
   end
 
   get '/pw-recovery/:token' do
-    pw_lost_token
+    pw_lost_token(params[:token])
   end
 
   post '/pw-lost' do
     pw_lost_post
   end
+
+
+  put '/pw-new' do
+    pw_new
+  end
+
 
   ## MATCHES ROUTES ##
 

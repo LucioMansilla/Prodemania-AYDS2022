@@ -4,8 +4,8 @@ module SessionHelper
     delivery_method :smtp, { 
       :address => 'smtp.gmail.com',
       :port => 587,
-      :user_name => 'prodemania@gmail.com',
-      :password => ENV['SECRET_APP_CODE'],
+      :user_name => 'luciomansillaztw@gmail.com',
+      :password => 'wisbbsfydfblfhdv',
       :authentication => :plain,
       :enable_starttls_auto => true
     }
@@ -13,7 +13,6 @@ module SessionHelper
 
     def new_singup
         erb :"players/signup"
-        #and then docker-compose up 
     end
 
     def new_authentication
@@ -45,7 +44,6 @@ module SessionHelper
 
     def create_login
         player = Player.find_by_name(params[:name])
-
         if player && player.authenticate(params[:password])
         session[:player_id] = player.id 
         redirect '/inicio'
@@ -84,18 +82,72 @@ module SessionHelper
         erb :"players/pw_lost", :layout => :layout
       end
 
-      def pw_lost_post
-        player = Player.find_by_email(params[:email])
+      def pw_new
+        player = PwRecovery.find_by_token(params[:token]).player
         if player
-          logger.info(generateRandomPassword)
+          player.password = params[:password]
+          player.save
+          PwRecovery.where(player_id: player.id).destroy_all
+          flash[:success] = "Contraseña cambiada con éxito!"
+          redirect '/login'
+        else
+          logger.info("no")
+          flash[:error] = "Ha ocurrido un error"
+          redirect '/pw-lost'
         end
+
       end
 
 
+      def pw_lost_post
+        player = Player.find_by_email(params[:email])
+        logger.info(player)
+        if player
+          pw_recovery_obj = PwRecovery.new
+          token = generateRandomPassword()
+          pw_recovery_obj.player_id = player.id
+          pw_recovery_obj.token = token
+          pw_recovery_obj.save
+          send_email_recovery(player.email, token)
+          mailSplitAfter3 = player.email.split("@")
+          #mailSplitothemiddle[0].slice(0,4);
+          mailSplitBefore3 = mailSplitAfter3[0].slice(0,3)
+
+          flash[:success] = "Por favor revise su correo electrónico: " + mailSplitBefore3 + "@****.com para un enlace de recuperación de contraseña" 
+          redirect '/pw-lost'
+        else
+          flash[:error] = "No existe ningún usuario con ese email"
+          redirect '/pw-lost'
+        end
+      end
+
+      def pw_lost_token(token)
+        pw_recovery_obj = PwRecovery.find_by_token(token)
+        if pw_recovery_obj
+          @player = Player.find_by_id(pw_recovery_obj.player_id)
+          @username = @player.name
+          @token = token
+          erb :"players/new_password", :layout => :layout
+        else
+          flash[:error] = "El token no es válido"
+          redirect '/pw-lost'
+        end
+      end
+
+      def send_email_recovery(mailUser, token)
+        mail = Mail.new do
+          from     'luciomansillaztw@gmail.com'
+          to       mailUser
+          subject  'Recuperación de contraseña'
+          body     "Para recuperar tu contraseña, haz click en el siguiente enlace: http://localhost:4567/pw-recovery/#{token}"
+        end
+        mail.deliver!
+      end
+
       def register_email_successfull(mailUser,userName)
-          template = File.read("app/views/players/emailer.erb")
+          template = File.read("app/views/players/emails/emailer.erb")
           mail = Mail.new do |m|
-            m.from    'prodemania@gmail.com'
+            m.from    'luciomansillaztw@gmail.com'
             m.to       mailUser
             m.subject 'Bienvenido a PRODE'
             m.html_part = template.gsub("{{name}}", userName)

@@ -33,3 +33,4 @@ m6 = Match.create(home: indep, away: racing, match_day: semi_copa_arg, match_typ
 p = Player.create(name:"Mateo", email: "mateo@correo.com", password: "12345", is_admin: true)
 l = Player.create(name:"Lucio", email: "lucio@correo.com", password: "12345", is_admin: true)
 b = Player.create(name:"Brenda", email: "brenda@correo.com", password: "12345", is_admin: true)
+#brenda = Player.create(name:"Brenda2", email:"dichiara.brenda3@gmail.com", password:"12345", is_admin: true)
