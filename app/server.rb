@@ -5,19 +5,23 @@ require 'sinatra/base'
 require 'bundler/setup'
 require 'sinatra/reloader' if Sinatra::Base.environment == :development
 require 'logger'
+require 'wicked_pdf'
 require "sinatra/activerecord"
 require_relative './models/init'
 require 'sinatra/flash'
+require 'prawn'
+require 'prawn/table'
 
 require_relative './helpers/game_helper'
 require_relative './helpers/match_helper'
 require_relative './helpers/forecast_helper'
 require_relative './helpers/admin_helper'
 require_relative './helpers/match_day_helper'
-
+require_relative './helpers/statistics_helper'
 require_relative './helpers/team_helper'
 require_relative './helpers/tournament_helper'
 require_relative './helpers/session_helper'
+require_relative './helpers/export_pdf_helper'
 
 class App < Sinatra::Application
 
@@ -26,10 +30,11 @@ class App < Sinatra::Application
   helpers ForecastHelper
   helpers AdminHelper
   helpers MatchDayHelper
-
+  helpers StatisticsHelper
   helpers TeamHelper
   helpers TournamentHelper
   helpers SessionHelper
+  helpers ExportPdfHelper
 
   configure :production, :development do
     enable :logging
@@ -68,7 +73,7 @@ class App < Sinatra::Application
      before do
       if session[:player_id]
         @current_player = Player.find_by(id: session[:player_id])
-       admin_pages = ["/teams","/tournaments", "/matches","/match_day_create","/add_tournament","/gestion","/add_team","/tournaments/update"]
+       admin_pages = ["/teams","/tournaments", "/matches","/match_day_create","/add_tournament","/gestion","/add_team","/tournaments/update","/export_pdf"]
        if(admin_pages.include?(request.path_info))
          if(@current_player.is_admin != true)
            redirect '/inicio'
@@ -85,6 +90,11 @@ class App < Sinatra::Application
       end
     end
     ## -- Session -- ##
+
+    get '/export_pdf' do
+      data = points_table_data(params['id_tournament'])
+      create_pdf(data)
+    end
 
 
   ##--- Player Controller ---##
@@ -176,7 +186,7 @@ class App < Sinatra::Application
   end 
 
   delete '/match_days/:match_day_id' do
-    delete_match_day
+    delete_match_dayMatchDayHelper
   end
 
   ## -- Tournament Controller -- ##
@@ -248,6 +258,10 @@ put '/edit' do
   update_player
 end
 
+## -- Statistisc -- ##
+get '/statistics' do
+  get_statistics
+end
 
 ## ----------------------------- ##
 

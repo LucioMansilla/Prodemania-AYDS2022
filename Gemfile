@@ -20,5 +20,11 @@ end
 gem 'bcrypt'
 gem 'sinatra-flash'
 
+
 gem 'mail'
 gem 'prawn'
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
+gem 'prawn'
+gem 'prawn-table'
+

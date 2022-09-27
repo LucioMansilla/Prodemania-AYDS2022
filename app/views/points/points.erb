@@ -30,6 +30,14 @@
               <% end %>
             </tbody>
           </table>
+
+          <form action='/export_pdf' method='get'>
+              <input type="hidden" name="id_tournament" value="<%=@id_tournament%>">
+              
+              <button style="margin-bottom: 0 !important;" type="submit" class="btn bg-primary-color secondary-color" id="submit-b">Descargar</button>
+              
+         </form> 
+      
         <% else %>
           <p class="text-white">Aun no se realizaron predicciones sobre el torneo seleccionado.</p>
         <% end %>
