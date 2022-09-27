@@ -1,3 +1,6 @@
+require 'mail'
+require  'mail'
+require 'prawn'
 require 'sinatra/base'
 require 'bundler/setup'
 require 'sinatra/reloader' if Sinatra::Base.environment == :development
@@ -60,9 +63,11 @@ class App < Sinatra::Application
     super()
   end
 
+
   get '/gestion' do
     get_menu_admin
   end
+
 
      ## -- Session -- ##
      before do
@@ -75,7 +80,10 @@ class App < Sinatra::Application
          end
        end
       else
-        public_pages = ["/login", "/signup"]
+        if(request.path_info.match(/\/pw-recovery\/.*/))
+          return
+        end
+        public_pages = ["/login", "/signup", "/pw-lost","/pw-new"]
         if !public_pages.include?(request.path_info)
           redirect '/login'
         end
@@ -122,6 +130,24 @@ class App < Sinatra::Application
   get '/points' do
     points
   end
+
+  get '/pw-lost' do
+    pw_lost
+  end
+
+  get '/pw-recovery/:token' do
+    pw_lost_token(params[:token])
+  end
+
+  post '/pw-lost' do
+    pw_lost_post
+  end
+
+
+  put '/pw-new' do
+    pw_new
+  end
+
 
   ## MATCHES ROUTES ##
 
