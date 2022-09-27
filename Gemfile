@@ -28,3 +28,4 @@ gem 'wkhtmltopdf-binary'
 gem 'prawn'
 gem 'prawn-table'
 
+gem 'rubocop', require: false
