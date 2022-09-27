@@ -5,7 +5,7 @@ module SessionHelper
       :address => 'smtp.gmail.com',
       :port => 587,
       :user_name => 'luciomansillaztw@gmail.com',
-      :password => 'wisbbsfydfblfhdv',
+      :password => ENV['SECRET_APP_CODE'],
       :authentication => :plain,
       :enable_starttls_auto => true
     }
@@ -25,8 +25,12 @@ module SessionHelper
 					flash[:error] = "Ya existe un usuario con ese email"
 					redirect '/signup'
 				end
-        player = Player.new(params)
+        player = Player.new()
+        player.name = params[:name]
+        player.email = params[:email]
+        player.password = params[:password]
 
+        logger.info(player)
         if !player.save
 					flash[:error] = "No se ha podido registrar el usuario"  
           redirect '/signup'
@@ -103,12 +107,16 @@ module SessionHelper
         player = Player.find_by_email(params[:email])
         logger.info(player)
         if player
+          if(PwRecovery.exists?(player_id: player.id))
+            PwRecovery.where(player_id: player.id).destroy_all
+          end
           pw_recovery_obj = PwRecovery.new
-          token = generateRandomPassword()
+          token = generateRandomPassword(8) #el harcodeo del 10 tmb
+          string_token = generateRandomPassword(100) #esto se debe refactorizar
           pw_recovery_obj.player_id = player.id
           pw_recovery_obj.token = token
           pw_recovery_obj.save
-          send_email_recovery(player.email, token)
+          send_email_recovery(player.email, token,string_token, player.name)
           mailSplitAfter3 = player.email.split("@")
           #mailSplitothemiddle[0].slice(0,4);
           mailSplitBefore3 = mailSplitAfter3[0].slice(0,3)
@@ -129,17 +137,18 @@ module SessionHelper
           @token = token
           erb :"players/new_password", :layout => :layout
         else
-          flash[:error] = "El token no es válido"
+          flash[:error] = "El token ha expirado"
           redirect '/pw-lost'
         end
       end
 
-      def send_email_recovery(mailUser, token)
-        mail = Mail.new do
-          from     'luciomansillaztw@gmail.com'
-          to       mailUser
-          subject  'Recuperación de contraseña'
-          body     "Para recuperar tu contraseña, haz click en el siguiente enlace: http://localhost:4567/pw-recovery/#{token}"
+      def send_email_recovery(mailUser, token,string_token,userName)
+        template = File.read('app/views/players/emails/email_change_password.erb')
+        mail = Mail.new do |m|
+          m.from     'luciomansillaztw@gmail.com'
+          m.to       mailUser
+          m.subject  'Recuperación de contraseña'
+          m.html_part = template.gsub("{{token}}", token).gsub("{{string_token}}", string_token).gsub("{{name}}", userName)
         end
         mail.deliver!
       end
@@ -147,7 +156,7 @@ module SessionHelper
       def register_email_successfull(mailUser,userName)
           template = File.read("app/views/players/emails/emailer.erb")
           mail = Mail.new do |m|
-            m.from    'luciomansillaztw@gmail.com'
+            m.from    'PRODEMANIA'
             m.to       mailUser
             m.subject 'Bienvenido a PRODE'
             m.html_part = template.gsub("{{name}}", userName)
@@ -155,9 +164,9 @@ module SessionHelper
           mail.deliver
       end 
       
-      def generateRandomPassword
+      def generateRandomPassword(length)
         o = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
-        string = (0...8).map { o[rand(o.length)] }.join
+        string = (0...length).map { o[rand(o.length)] }.join
         return string
       end
 
