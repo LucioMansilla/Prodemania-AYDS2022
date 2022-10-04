@@ -1,77 +1,71 @@
+# frozen_string_literal: true
+
 class Forecast < ActiveRecord::Base
-    belongs_to :player 
-    belongs_to :match
-    belongs_to :tournament
+  belongs_to :player
+  belongs_to :match
+  belongs_to :tournament
 
-    attr_accessor :old_points
+  attr_accessor :old_points
 
-    validates_presence_of :player_id, :home_goals, :away_goals, :tournament_id, :result, :match_id
-    validates :result, acceptance: { accept: ['HOME', 'AWAY','DRAW'] }
-    before_create :check_player_tournament
-    def calculate_points
-      
-      self.old_points = self.points ? self.points : 0
-  
-      total_points = 0
-      if self.match.has_result?
-        if self.guess_result 
-          total_points += 1
-          if self.guess_goals
-            total_points += 2
-          end   
-        end 
-      end
-  
-      self.points = total_points
-      self.save
-  
-      total_points
-    end
-  
-    def guess_result
-      self.result == self.match.result  
-    end
-  
-    def guess_goals 
-      self.home_goals == self.match.home_goals && self.away_goals == self.match.away_goals
+  validates_presence_of :player_id, :home_goals, :away_goals, :tournament_id, :result, :match_id
+  validates :result, acceptance: { accept: %w[HOME AWAY DRAW] }
+  before_create :check_player_tournament
+  def calculate_points
+    self.old_points = points || 0
+
+    total_points = 0
+    if match.result? && guess_result
+      total_points += 1
+      total_points += 2 if guess_goals
     end
 
-    def check_player_tournament
-      if !Point.exists?(tournament: self.tournament, player: self.player)
-        Point.create(player: self.player, tournament: self.tournament, total_points: 0)
-      end
-    end
+    self.points = total_points
+    save
 
-    #return the forecast or the empty string if it doesn't exists
-     def self.check_match_player(player_id, match_id)
-      f =  Forecast.find_by(player_id: player_id, match_id: match_id)
-      if f != nil
-        return f
-      else 
-        return Forecast.new(:player_id => player_id, :match_id => match_id)
-      end
-    end
+    total_points
+  end
 
-    def consistentResult
-      if self.match.match_type == 'LEAGUE'
-        if self.result == 'HOME' &&  self.home_goals > self.away_goals
-          return true
-        elsif self.result == 'AWAY' &&  self.home_goals < self.away_goals
-            return true
-        elsif self.result == 'DRAW' &&  self.home_goals == self.away_goals
-            return true
-        else
-            return false
-        end
+  def guess_result
+    result == match.result
+  end
+
+  def guess_goals
+    home_goals == match.home_goals && away_goals == match.away_goals
+  end
+
+  def check_player_tournament
+    Point.create(player: player, tournament: tournament, total_points: 0) unless Point.exists?(
+      tournament: tournament, player: player
+    )
+  end
+
+  # return the forecast or the empty string if it doesn't exists
+  def self.check_match_player(player_id, match_id)
+    f = Forecast.find_by(player_id: player_id, match_id: match_id)
+    if !f.nil?
+      f
+    else
+      Forecast.new(player_id: player_id, match_id: match_id)
+    end
+  end
+
+  def consistent_result
+    if match.match_type == 'LEAGUE'
+      if result == 'HOME' && home_goals > away_goals
+        true
+      elsif result == 'AWAY' &&  home_goals < away_goals
+        true
+      elsif result == 'DRAW' &&  home_goals == away_goals
+        true
       else
-        if self.result == 'HOME' &&  self.home_goals >= self.away_goals
-          return true
-        elsif self.result == 'AWAY' &&  self.home_goals <= self.away_goals
-            return true
-        else
-            return false
-        end
+        false
       end
-        
+    elsif result == 'HOME' && home_goals >= away_goals
+      true
+    elsif result == 'AWAY' && home_goals <= away_goals
+      true
+    else
+      false
     end
+  end
 end
