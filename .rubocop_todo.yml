@@ -23,10 +23,19 @@ Metrics/ClassLength:
   Exclude:
     - app/server.rb
 
+Metrics/AbcSize:
+  Max: 20
+
+Metrics/MethodLength:
+  Max: 15
+
 Lint/UselessAssignment:
   Exclude:
     - 'app/helpers/match_helper.rb'
     - 'app/helpers/session_helper.rb'
     - 'db/seeds.rb'
     - 'spec/player_spec.rb'
+
+
+
 

@@ -63,13 +63,21 @@ GEM
       rspec-mocks (~> 3.11.0)
     rspec-core (3.11.0)
       rspec-support (~> 3.11.0)
+<<<<<<< HEAD
     rspec-expectations (3.11.0)
+=======
+    rspec-expectations (3.11.1)
+>>>>>>> eb251fa3c7134c7a0bb5d6b138e111f6716b04d5
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.11.0)
     rspec-mocks (3.11.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.11.0)
+<<<<<<< HEAD
     rspec-support (3.11.0)
+=======
+    rspec-support (3.11.1)
+>>>>>>> eb251fa3c7134c7a0bb5d6b138e111f6716b04d5
     rubocop (1.36.0)
       json (~> 2.3)
       parallel (~> 1.10)
@@ -95,9 +103,6 @@ GEM
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.3.0)
-    wicked_pdf (2.6.3)
-      activesupport
-    wkhtmltopdf-binary (0.12.6.5)
 
 PLATFORMS
   ruby

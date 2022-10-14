@@ -32,7 +32,7 @@ m4 = Match.create(home: arsenal, away: everton, match_day: fecha_1_premier, matc
 m5 = Match.create(home: boca, away: river, match_day: semi_copa_arg, match_type: 'ELIMINATION')
 m6 = Match.create(home: indep, away: racing, match_day: semi_copa_arg, match_type: 'ELIMINATION')
 
-p = Player.create(name: 'Mateo', email: 'mateo@correo.com', password: '12345', is_admin: true)
+p = Player.create(name: 'Mateo', email: 'mateo@correo.com', password: 's', is_admin: true)
 l = Player.create(name: 'Lucio', email: 'lucio@correo.com', password: '12345', is_admin: true)
 b = Player.create(name: 'Brenda', email: 'brenda@correo.com', password: '12345', is_admin: true)
 
