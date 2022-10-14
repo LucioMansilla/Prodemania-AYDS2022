@@ -51,16 +51,26 @@ class Forecast < ActiveRecord::Base
 
   def consistent_result
     if match.match_type == 'LEAGUE'
-      if result == 'HOME' && home_goals > away_goals
-        true
-      elsif result == 'AWAY' &&  home_goals < away_goals
-        true
-      elsif result == 'DRAW' &&  home_goals == away_goals
-        true
-      else
-        false
-      end
-    elsif result == 'HOME' && home_goals >= away_goals
+      consistent_result_league
+    else
+      consistent_result_elimination
+    end
+  end
+
+  def consistent_result_league
+    if result == 'HOME' && home_goals > away_goals
+      true
+    elsif result == 'AWAY' &&  home_goals < away_goals
+      true
+    elsif result == 'DRAW' &&  home_goals == away_goals
+      true
+    else
+      false
+    end
+  end
+
+  def consistent_result_elimination
+    if result == 'HOME' && home_goals >= away_goals
       true
     elsif result == 'AWAY' && home_goals <= away_goals
       true
