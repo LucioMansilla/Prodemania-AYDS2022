@@ -63,21 +63,13 @@ GEM
       rspec-mocks (~> 3.11.0)
     rspec-core (3.11.0)
       rspec-support (~> 3.11.0)
-<<<<<<< HEAD
-    rspec-expectations (3.11.0)
-=======
     rspec-expectations (3.11.1)
->>>>>>> eb251fa3c7134c7a0bb5d6b138e111f6716b04d5
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.11.0)
     rspec-mocks (3.11.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.11.0)
-<<<<<<< HEAD
-    rspec-support (3.11.0)
-=======
     rspec-support (3.11.1)
->>>>>>> eb251fa3c7134c7a0bb5d6b138e111f6716b04d5
     rubocop (1.36.0)
       json (~> 2.3)
       parallel (~> 1.10)
@@ -121,8 +113,6 @@ DEPENDENCIES
   sinatra-contrib!
   sinatra-flash
   sqlite3
-  wicked_pdf
-  wkhtmltopdf-binary
 
 RUBY VERSION
    ruby 2.7.5p203

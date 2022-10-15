@@ -19,15 +19,18 @@ Style/Documentation:
     - app/models/*
     - app/helpers/*
 
+
 Metrics/ClassLength:
   Exclude:
     - app/server.rb
 
 Metrics/AbcSize:
-  Max: 20
+  Max: 40
 
 Metrics/MethodLength:
   Max: 15
+
+
 
 Lint/UselessAssignment:
   Exclude:
@@ -35,6 +38,7 @@ Lint/UselessAssignment:
     - 'app/helpers/session_helper.rb'
     - 'db/seeds.rb'
     - 'spec/player_spec.rb'
+    - 'app/helpers/mail_helper.rb'
 
 
 
