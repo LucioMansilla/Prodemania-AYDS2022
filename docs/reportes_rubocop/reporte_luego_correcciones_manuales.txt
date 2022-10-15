@@ -1,0 +1,46 @@
+Inspecting 26 files
+...C.CCCCC................
+
+Offenses:
+
+app/helpers/forecast_helper.rb:5:3: C: Metrics/AbcSize: Assignment Branch Condition size for post_forecast is too high. [<7, 31, 2> 31.84/20]
+  def post_forecast ...
+  ^^^^^^^^^^^^^^^^^
+app/helpers/match_day_helper.rb:12:3: C: Metrics/AbcSize: Assignment Branch Condition size for post_match_day is too high. [<7, 21, 3> 22.34/20]
+  def post_match_day ...
+  ^^^^^^^^^^^^^^^^^^
+app/helpers/match_helper.rb:4:3: C: Metrics/AbcSize: Assignment Branch Condition size for create_match is too high. [<14, 39, 5> 41.74/20]
+  def create_match ...
+  ^^^^^^^^^^^^^^^^
+app/helpers/match_helper.rb:4:3: C: Metrics/MethodLength: Method has too many lines. [20/15]
+  def create_match ...
+  ^^^^^^^^^^^^^^^^
+app/helpers/match_helper.rb:37:3: C: Metrics/AbcSize: Assignment Branch Condition size for update_match is too high. [<8, 33, 4> 34.19/20]
+  def update_match ...
+  ^^^^^^^^^^^^^^^^
+app/helpers/session_helper.rb:4:1: C: Metrics/ModuleLength: Module has too many lines. [160/100]
+module SessionHelper ...
+^^^^^^^^^^^^^^^^^^^^
+app/helpers/session_helper.rb:20:3: C: Metrics/AbcSize: Assignment Branch Condition size for new_authentication is too high. [<9, 39, 4> 40.22/20]
+  def new_authentication ...
+  ^^^^^^^^^^^^^^^^^^^^^^
+app/helpers/session_helper.rb:20:3: C: Metrics/MethodLength: Method has too many lines. [23/15]
+  def new_authentication ...
+  ^^^^^^^^^^^^^^^^^^^^^^
+app/helpers/session_helper.rb:67:3: C: Metrics/AbcSize: Assignment Branch Condition size for update_player is too high. [<6, 26, 5> 27.15/20]
+  def update_player ...
+  ^^^^^^^^^^^^^^^^^
+app/helpers/session_helper.rb:105:3: C: Metrics/AbcSize: Assignment Branch Condition size for pw_lost_post is too high. [<10, 29, 3> 30.82/20]
+  def pw_lost_post ...
+  ^^^^^^^^^^^^^^^^
+app/helpers/session_helper.rb:105:3: C: Metrics/MethodLength: Method has too many lines. [20/15]
+  def pw_lost_post ...
+  ^^^^^^^^^^^^^^^^
+app/helpers/statistics_helper.rb:4:3: C: Metrics/AbcSize: Assignment Branch Condition size for statistics is too high. [<12, 22, 1> 25.08/20]
+  def statistics ...
+  ^^^^^^^^^^^^^^
+app/helpers/team_helper.rb:10:3: C: Metrics/AbcSize: Assignment Branch Condition size for create_team is too high. [<6, 20, 4> 21.26/20]
+  def create_team ...
+  ^^^^^^^^^^^^^^^
+
+26 files inspected, 13 offenses detected

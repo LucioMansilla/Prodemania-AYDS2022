@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'match_day'
 require_relative 'forecast'
 require_relative 'match'

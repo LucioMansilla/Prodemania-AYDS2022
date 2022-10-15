@@ -1,15 +1,14 @@
+# frozen_string_literal: true
+
 require 'mail'
-require  'mail'
 require 'prawn'
 require 'sinatra/base'
 require 'bundler/setup'
 require 'sinatra/reloader' if Sinatra::Base.environment == :development
 require 'logger'
-require 'wicked_pdf'
-require "sinatra/activerecord"
+require 'sinatra/activerecord'
 require_relative './models/init'
 require 'sinatra/flash'
-require 'prawn'
 require 'prawn/table'
 
 require_relative './helpers/game_helper'
@@ -24,7 +23,6 @@ require_relative './helpers/session_helper'
 require_relative './helpers/export_pdf_helper'
 
 class App < Sinatra::Application
-
   helpers GameHelperModule
   helpers MatchHelperModule
   helpers ForecastHelper
@@ -38,11 +36,11 @@ class App < Sinatra::Application
 
   configure :production, :development do
     enable :logging
-    logger = Logger.new(STDOUT)
+    logger = Logger.new($stdout)
     logger.level = Logger::DEBUG if development?
     set :logger, logger
   end
-  
+
   configure :development do
     register Sinatra::Reloader
     after_reload do
@@ -50,7 +48,7 @@ class App < Sinatra::Application
     end
   end
 
-  configure do 
+  configure do
     register Sinatra::Flash
     set :views, 'app/views'
     set :public_folder, 'public'
@@ -58,44 +56,34 @@ class App < Sinatra::Application
     set :session_secret, ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }
   end
 
-
-  def initialize(app = nil)
+  def initialize(_app = nil)
     super()
   end
 
-
   get '/gestion' do
-    get_menu_admin
+    menu_admin
   end
 
+  ## -- Session -- ##
+  before do
+    if session[:player_id]
+      @current_player = Player.find_by(id: session[:player_id])
+      admin_pages = ['/teams', '/tournaments', '/matches', '/match_day_create', '/add_tournament', '/gestion',
+                     '/add_team', '/tournaments/update', '/export_pdf']
+      redirect '/inicio' if admin_pages.include?(request.path_info) && (@current_player.is_admin != true)
+    else
+      return if request.path_info.match(%r{/pw-recovery/.*})
 
-     ## -- Session -- ##
-     before do
-      if session[:player_id]
-        @current_player = Player.find_by(id: session[:player_id])
-       admin_pages = ["/teams","/tournaments", "/matches","/match_day_create","/add_tournament","/gestion","/add_team","/tournaments/update","/export_pdf"]
-       if(admin_pages.include?(request.path_info))
-         if(@current_player.is_admin != true)
-           redirect '/inicio'
-         end
-       end
-      else
-        if(request.path_info.match(/\/pw-recovery\/.*/))
-          return
-        end
-        public_pages = ["/login", "/signup", "/pw-lost","/pw-new"]
-        if !public_pages.include?(request.path_info)
-          redirect '/login'
-        end
-      end
+      public_pages = ['/login', '/signup', '/pw-lost', '/pw-new']
+      redirect '/login' unless public_pages.include?(request.path_info)
     end
-    ## -- Session -- ##
+  end
+  ## -- Session -- ##
 
-    get '/export_pdf' do
-      data = points_table_data(params['id_tournament'])
-      create_pdf(data)
-    end
-
+  get '/export_pdf' do
+    data = points_table_data(params['id_tournament'])
+    create_pdf(data)
+  end
 
   ##--- Player Controller ---##
   get '/signup' do
@@ -119,11 +107,11 @@ class App < Sinatra::Application
     redirect '/login'
   end
 
-  get '/home' do 
+  get '/home' do
     home
   end
 
-  get '/play' do 
+  get '/play' do
     play
   end
 
@@ -143,11 +131,9 @@ class App < Sinatra::Application
     pw_lost_post
   end
 
-
   put '/pw-new' do
     pw_new
   end
-
 
   ## MATCHES ROUTES ##
 
@@ -179,94 +165,90 @@ class App < Sinatra::Application
 
   get '/match_days/new' do
     new_match_days
-  end 
+  end
 
   post '/match_days' do
     post_match_day
-  end 
+  end
 
   delete '/match_days/:match_day_id' do
     delete_match_dayMatchDayHelper
   end
 
   ## -- Tournament Controller -- ##
-  get '/match_days' do 
-    @match_days = MatchDay.where(:tournament_id == params[:tournament_id])
+  get '/match_days' do
+    @match_days = MatchDay.where(params[:tournament_id] == :tournament_id)
     erb :"jugar/match_days"
   end
-  
-  
- ## -- Add Team for Admin -- ##
- 
-post '/teams' do
-  create_team
-end
 
-get '/teams/new' do
- new_team
-end
+  ## -- Add Team for Admin -- ##
 
-put '/teams/:id' do
-  update_team_tournament
-end
+  post '/teams' do
+    create_team
+  end
 
-get '/teams/update' do
-  update_team
-end
+  get '/teams/new' do
+    new_team
+  end
 
+  put '/teams/:id' do
+    update_team_tournament
+  end
 
-delete '/teams/:team_id' do
-  delete_team
-end
+  get '/teams/update' do
+    update_team
+  end
 
-## -- Tournament for Admin -- #
+  delete '/teams/:team_id' do
+    delete_team
+  end
 
-get '/tournaments' do
-new_tournament
-end
+  ## -- Tournament for Admin -- #
 
-post '/tournaments' do 
-name_tournament = params['name']
-create_tournament (name_tournament)
-end
+  get '/tournaments' do
+    new_tournament
+  end
 
-delete '/tournaments/:id' do 
-delete_tournament (params['id'])
-end
+  post '/tournaments' do
+    name_tournament = params['name']
+    create_tournament(name_tournament)
+  end
 
-put '/tournaments' do
-  update_tournament
-end
+  delete '/tournaments/:id' do
+    delete_tournament(params['id'])
+  end
 
-get '/tournaments/update/:id' do
-update_t
-end
-## Forecasts ##
+  put '/tournaments' do
+    update_tournament
+  end
 
-get '/forecasts' do 
-  get_forecasts
-end
+  get '/tournaments/update/:id' do
+    update_t
+  end
+  ## Forecasts ##
 
+  get '/forecasts' do
+    forecast
+  end
 
-## -- PROFILE -- ##
-get '/profile' do
-  @current_player = Player.find_by(id: session[:player_id])
-  profile 
-end
+  ## -- PROFILE -- ##
+  get '/profile' do
+    @current_player = Player.find_by(id: session[:player_id])
+    profile
+  end
 
-put '/edit' do
-  update_player
-end
+  put '/edit' do
+    update_player
+  end
 
-## -- Statistisc -- ##
-get '/statistics' do
-  get_statistics
-end
+  ## -- Statistisc -- ##
+  get '/statistics' do
+    statistics
+  end
 
-## ----------------------------- ##
+  ## ----------------------------- ##
 
-get '/*' do
-  redirect '/home'
-end
-
+  get '/*' do
+    redirect '/home'
+  end
 end
