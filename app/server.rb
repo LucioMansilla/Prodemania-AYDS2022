@@ -21,6 +21,8 @@ require_relative './helpers/team_helper'
 require_relative './helpers/tournament_helper'
 require_relative './helpers/session_helper'
 require_relative './helpers/export_pdf_helper'
+require_relative './helpers/profile_helper'
+require_relative './helpers/mail_helper'
 
 class App < Sinatra::Application
   helpers GameHelperModule
@@ -33,6 +35,8 @@ class App < Sinatra::Application
   helpers TournamentHelper
   helpers SessionHelper
   helpers ExportPdfHelper
+  helpers ProfileHelper
+  helpers MailHelper
 
   configure :production, :development do
     enable :logging
