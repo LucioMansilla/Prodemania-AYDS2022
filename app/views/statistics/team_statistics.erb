@@ -1,0 +1,111 @@
+<div class="row mt-3">
+  <div class="col-12 col-md-10 mx-auto">
+    <h3 class="text-white">Estadísticas <%=@team.name%></h3>
+    <% if (@win + @lose + @draw) == 0 %>
+      
+      <p class="text-white">No se han jugado partidos.</p>  
+
+    <% else %>
+
+      <div class="row mt-4">
+        <div class="col-12 col-md-6 mx-auto">
+          <h5 class="text-center text-white">Resultados</h5>
+          <canvas id="results"></canvas>
+        </div>
+
+        <div class="col-9 col-md-3 mx-auto">
+          <h5 class="text-center text-white">Efectividad</h5>
+          <canvas id="efectivity"></canvas>
+          </div>
+      </div>
+
+    <% end %>
+
+    
+ 
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const labelsResults = [
+    "Ganados",
+    "Empatados",
+    "Perdidos"
+  ];
+
+  const dataResults = {
+    labels: labelsResults,
+    datasets: [{
+      label: 'Resultados',
+      backgroundColor: [
+        "#44bb4980",
+        "#f7f73680",
+        "#e11a1a80"
+      ],
+      borderColor: [
+        "#44bb49",
+        "#f7f736",
+        "#e11a1a"
+      ],
+      borderWidth: 1,
+      data: [<%= @win%>, <%= @draw%>, <%= @lose%>],
+    }]
+  };
+
+  const configResults = {
+    type: 'bar',
+    data: dataResults,
+    options: {}
+  };
+
+  const chartResults = new Chart(
+    document.getElementById('results'),
+    configResults
+  );
+
+  const labelsEfectivity = [
+    "Puntos Ganados",
+    "Puntos Perdidos"
+  ];
+
+  const dataEfectivity = {
+    labels: labelsEfectivity,
+    datasets: [{
+      label: 'Efectividad',
+      backgroundColor: [
+        "#44bb4980",
+        "#e11a1a80"
+      ],
+      hoverOffset: 2,
+      data: [<%= @efectivity%>, <%= (100-@efectivity)%>],
+    }]
+  };
+
+  const configEfectivity = {
+    type: 'pie',
+    data: dataEfectivity,
+    options: {
+      title: {
+        display: true,
+        text: "Efectividad"
+      }
+    }
+  };
+
+  const chartEfectivity = new Chart(
+    document.getElementById('efectivity'),
+    configEfectivity
+  );
+</script>
+
+    
+    
+ 
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  
+</script>
