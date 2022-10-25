@@ -119,6 +119,10 @@ class App < Sinatra::Application
     play
   end
 
+  get '/teams-list' do
+    team_list
+  end
+
   get '/points' do
     points
   end
