@@ -38,7 +38,7 @@ class Match < ActiveRecord::Base
   end
 
   def consistent_result
-    if match.match_type == 'LEAGUE'
+    if self.match_type == 'LEAGUE'
       consistent_result_league
     else
       consistent_result_elimination
