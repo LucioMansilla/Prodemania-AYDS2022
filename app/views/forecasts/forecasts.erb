@@ -20,7 +20,7 @@
           <% @forecasts.each do |forecast|%>
             <tr>
               <td><%= forecast.tournament.name%></td>
-              <td><%= forecast.match.home.name%> VS <%= forecast.match.away.name%></td>
+              <td><span role="button" onclick="window.location.assign('/statistics/<%=forecast.match.home.name%>')"><%= forecast.match.home.name%></span> VS <span role="button" onclick="window.location.assign('/statistics/<%=forecast.match.away.name%>')"><%= forecast.match.away.name%></span></td>
               <td>
                 <% if forecast.result == "HOME" %>
                   LOCAL
