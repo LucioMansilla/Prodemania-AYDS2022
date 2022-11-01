@@ -16,7 +16,7 @@
 
                 <ul>
                     <% @teams.each do |t|%>
-                    <a class="link-primary" href="/statistics?id_team=<%= t.id%>">
+                    <a class="link-primary" href="/statistics/<%= t.name%>">
                     <li> <%= t.name %> </li> </a>
                     <% end %>
                 </ul>                                     
