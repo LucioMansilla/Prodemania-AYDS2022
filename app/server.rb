@@ -17,10 +17,13 @@ require_relative './helpers/forecast_helper'
 require_relative './helpers/admin_helper'
 require_relative './helpers/match_day_helper'
 require_relative './helpers/statistics_helper'
+require_relative './helpers/team_statistics_helper'
 require_relative './helpers/team_helper'
 require_relative './helpers/tournament_helper'
 require_relative './helpers/session_helper'
 require_relative './helpers/export_pdf_helper'
+require_relative './helpers/profile_helper'
+require_relative './helpers/mail_helper'
 
 class App < Sinatra::Application
   helpers GameHelperModule
@@ -33,6 +36,9 @@ class App < Sinatra::Application
   helpers TournamentHelper
   helpers SessionHelper
   helpers ExportPdfHelper
+  helpers ProfileHelper
+  helpers MailHelper
+  helpers TeamStatisticsHelper
 
   configure :production, :development do
     enable :logging
@@ -113,6 +119,10 @@ class App < Sinatra::Application
 
   get '/play' do
     play
+  end
+
+  get '/teams-list' do
+    team_list
   end
 
   get '/points' do
@@ -242,6 +252,10 @@ class App < Sinatra::Application
   end
 
   ## -- Statistisc -- ##
+  get '/statistics/:name' do 
+    team_statistics
+  end
+  
   get '/statistics' do
     statistics
   end
