@@ -13,7 +13,28 @@ body {
 .primary-color {
   color: #3aa17a
 }
+.accordion-button:not(.collapsed) {
+  color: #000000 !important;
+}
 
+#title-accordion{
+  color: #000000 !important;
+ /* BOLD */
+  font-weight: 500;
+  font-size: 1em;
+
+  
+}
+
+#h1-faq{
+  color: #ffffff;
+  font-family: 'Roboto', sans-serif;
+  font-size: 2.8em;
+
+}
+.accordion{
+  background-color: #242424;
+}
 .bg-primary-color {
  background-color: #3aa17a
 }
