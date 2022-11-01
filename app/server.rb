@@ -69,7 +69,7 @@ class App < Sinatra::Application
     if session[:player_id]
       @current_player = Player.find_by(id: session[:player_id])
       admin_pages = ['/teams', '/tournaments', '/matches', '/match_day_create', '/add_tournament', '/gestion',
-                     '/add_team', '/tournaments/update', '/export_pdf']
+                     '/add_team', '/tournaments/update', '/export_pdf','/faq']
       redirect '/inicio' if admin_pages.include?(request.path_info) && (@current_player.is_admin != true)
     else
       return if request.path_info.match(%r{/pw-recovery/.*})
@@ -247,6 +247,12 @@ class App < Sinatra::Application
   end
 
   ## ----------------------------- ##
+
+
+  get '/faq' do
+    erb:'info/faq', layout: :layout2
+  end
+
 
   get '/*' do
     redirect '/home'
