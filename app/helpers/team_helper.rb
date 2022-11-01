@@ -7,6 +7,20 @@ module TeamHelper
     erb :"admin/teams", layout: :layout2
   end
 
+  def team_list
+
+    @tournaments = Tournament.all
+
+    if params['id_tournament']
+      @torneo_selected = true
+      selected_tournament = Tournament.find_by_id(params['id_tournament'])
+      @teams = selected_tournament.teams
+    end
+    
+    erb :"play/team_list", layout: :layout2
+
+  end
+
   def create_team
     name_team = params['name']
     team = Team.new
