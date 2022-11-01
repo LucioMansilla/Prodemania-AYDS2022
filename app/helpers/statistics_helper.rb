@@ -18,7 +18,7 @@ module StatisticsHelper
       @partial_successes = prediction_results['partial_successes']
     end
 
-    errb :"statistics/statistics", layout: :layout2
+    erb :"statistics/statistics", layout: :layout2
   end
 
   def forecasts(tournament)

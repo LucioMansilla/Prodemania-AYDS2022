@@ -12,7 +12,7 @@
 
       <%if @torneo_selected%>
             <%if !@teams.empty?%>
-                <h3 class="text-white">Selecciona el equipo para la cual quieres acceder a sus estadisticas:</h3>
+                <h3 class="text-white">Selecciona el equipo para el cual quieres acceder a sus estadisticas:</h3>
 
                 <ul>
                     <% @teams.each do |t|%>
@@ -21,7 +21,7 @@
                     <% end %>
                 </ul>                                     
             <%else%>
-                    <p class="text-white">No hay instancias disponibles correspondientes al torneo seleccionado.</p>
+                    <p class="text-white">No hay equipos disponibles correspondientes al torneo seleccionado.</p>
             <%end%>
       <%end%>
 
