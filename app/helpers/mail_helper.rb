@@ -15,8 +15,7 @@ module MailHelper
 
   def send_email_recovery(mail_user, token, string_token, user_name)
     template = File.read('app/views/players/emails/email_change_password.erb')
-    mail = Mail.new
-    mail do |m|
+    mail = Mail.new do |m|
       m.from     'luciomansillaztw@gmail.com'
       m.to       mail_user
       m.subject  'Recuperación de contraseña'
@@ -28,8 +27,7 @@ module MailHelper
 
   def register_email_successfull(mail_user, user_name)
     template = File.read('app/views/players/emails/emailer.erb')
-    mail = Mail.new
-    mail do |m|
+    mail = Mail.new do |m|
       m.from 'PRODEMANIA'
       m.to mail_user
       m.subject 'Bienvenido a PRODE'
@@ -45,8 +43,7 @@ module MailHelper
 
   def email_update_successfull(mail_user, user_name)
     template = File.read('app/views/players/password_update.erb')
-    mail = Mail.new
-    mail do |m|
+    mail = Mail.new do |m|
       m.from    'prodemania@gmail.com'
       m.to      mail_user
       m.subject 'Actualización de contraseña'
