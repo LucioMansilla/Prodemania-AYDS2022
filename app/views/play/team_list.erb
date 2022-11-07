@@ -1,0 +1,33 @@
+<div class="row mt-5">
+  <div class="col-12 col-md-10 mx-auto">
+    <%if !@tournaments.empty?%>
+      <h3 class="text-white" >Selecciona el torneo para visualizar los equipos asociados:</h3>
+
+      <ul>
+        <% @tournaments.each do |t|%>
+          <a class="link-primary" href="/teams-list?id_tournament=<%= t.id%>">
+          <li> <%= t.name%> </li> </a>
+        <% end %>
+      </ul>
+
+      <%if @torneo_selected%>
+            <%if !@teams.empty?%>
+                <h3 class="text-white">Selecciona el equipo para el cual quieres acceder a sus estadisticas:</h3>
+
+                <ul>
+                    <% @teams.each do |t|%>
+                    <a class="link-primary" href="/statistics/<%= t.name%>">
+                    <li> <%= t.name %> </li> </a>
+                    <% end %>
+                </ul>                                     
+            <%else%>
+                    <p class="text-white">No hay equipos disponibles correspondientes al torneo seleccionado.</p>
+            <%end%>
+      <%end%>
+
+    <%else%>
+      <p class="text-white">No hay torneos disponibles para visualizar.</p>
+    <%end%>
+
+   </div>
+</div>

@@ -17,10 +17,13 @@ require_relative './helpers/forecast_helper'
 require_relative './helpers/admin_helper'
 require_relative './helpers/match_day_helper'
 require_relative './helpers/statistics_helper'
+require_relative './helpers/team_statistics_helper'
 require_relative './helpers/team_helper'
 require_relative './helpers/tournament_helper'
 require_relative './helpers/session_helper'
 require_relative './helpers/export_pdf_helper'
+require_relative './helpers/profile_helper'
+require_relative './helpers/mail_helper'
 
 class App < Sinatra::Application
   helpers GameHelperModule
@@ -33,6 +36,9 @@ class App < Sinatra::Application
   helpers TournamentHelper
   helpers SessionHelper
   helpers ExportPdfHelper
+  helpers ProfileHelper
+  helpers MailHelper
+  helpers TeamStatisticsHelper
 
   configure :production, :development do
     enable :logging
@@ -69,7 +75,7 @@ class App < Sinatra::Application
     if session[:player_id]
       @current_player = Player.find_by(id: session[:player_id])
       admin_pages = ['/teams', '/tournaments', '/matches', '/match_day_create', '/add_tournament', '/gestion',
-                     '/add_team', '/tournaments/update', '/export_pdf']
+                     '/add_team', '/tournaments/update', '/export_pdf','/faq']
       redirect '/inicio' if admin_pages.include?(request.path_info) && (@current_player.is_admin != true)
     else
       return if request.path_info.match(%r{/pw-recovery/.*})
@@ -113,6 +119,10 @@ class App < Sinatra::Application
 
   get '/play' do
     play
+  end
+
+  get '/teams-list' do
+    team_list
   end
 
   get '/points' do
@@ -242,11 +252,21 @@ class App < Sinatra::Application
   end
 
   ## -- Statistisc -- ##
+  get '/statistics/:name' do 
+    team_statistics
+  end
+  
   get '/statistics' do
     statistics
   end
 
   ## ----------------------------- ##
+
+
+  get '/faq' do
+    erb:'info/faq', layout: :layout2
+  end
+
 
   get '/*' do
     redirect '/home'

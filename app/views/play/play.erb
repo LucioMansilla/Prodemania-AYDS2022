@@ -51,7 +51,7 @@
                     </div>
                     <div class="row align-items-center">
                       <div class="col-12 col-md-3">
-                        <b class="mb-0"><%=t.home.name%> VS <%=t.away.name%></b>
+                        <b class="mb-0"><span role="button" onclick="window.location.assign('/statistics/<%=t.home.name%>')"><%=t.home.name%></span> VS <span role="button" onclick="window.location.assign('/statistics/<%=t.away.name%>')"><%=t.away.name%></span></b>
                       </div>
                       <% if t.result? %>
                         <div class="col-12 col-md-3">
