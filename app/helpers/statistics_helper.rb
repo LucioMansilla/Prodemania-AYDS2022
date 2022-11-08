@@ -57,6 +57,6 @@ module StatisticsHelper
         fails += 1
       end
     end
-    { 'succeses' => successes, 'partial_successes' => partial_successes, 'fails' => fails }
+    { 'successes' => successes, 'partial_successes' => partial_successes, 'fails' => fails }
   end
 end
