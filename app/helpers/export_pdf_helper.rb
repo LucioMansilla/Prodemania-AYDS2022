@@ -66,6 +66,7 @@ module ExportPdfHelper
         row(i).text_color = '242424'
         row(i).background_color = '3aa17a'
         unless i.zero?
+          row(i).border_color = '3aa17a'
           row(i).text_color = 'f2f2f2'
           row(i).background_color = '242424'
         end
