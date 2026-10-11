@@ -1,6 +1,6 @@
-require 'mail'
-require  'mail'
-require 'prawn'
+require 'mail'eusebia7@gmail.com
+require  'mail''eusebia7@gmail.com
+require 'prawn'angyangel991
 require 'sinatra/base'
 require 'bundler/setup'
 require 'sinatra/reloader' if Sinatra::Base.environment == :development
